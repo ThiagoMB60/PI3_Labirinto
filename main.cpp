@@ -164,7 +164,10 @@ void tela5(matrizGame matriz5[][tm5], int tamanho)
                     (linha == 32 && coluna < 32 && coluna > 23)|| (coluna == 32 && linha < 36 && linha > 29)|| (coluna == 1 && linha < 10 && linha > 0)||
                     (coluna > 1 && linha == 9 && coluna < 8) || (coluna == 3 && linha < 37 && linha > 23) || (coluna < 21 && linha == 36 && coluna > 3) ||
                     (coluna == 19 && linha < 36 && linha > 28) || (linha == 29 && coluna > 19 && coluna < 27) || (coluna == 26 && linha < 29 && linha > 16) ||
-                    (linha == 17 && coluna > 6 && coluna < 26) || (coluna == 7 && linha < 33 && linha > 17) || (linha == 32 && coluna > 6 && coluna < 14) )
+                    (linha == 17 && coluna > 6 && coluna < 26) || (coluna == 7 && linha < 33 && linha > 17) || (linha == 32 && coluna > 6 && coluna < 14) ||
+                    (linha == 39 && coluna > 0 && coluna < 21) || (linha == 21 && coluna > 0 && coluna < 4) || (coluna == 1 && linha < 39 && linha > 21) ||
+                    (coluna == 3 && linha < 21 && linha > 10) || (linha == 27 && coluna > 11 && coluna < 20) || (linha == 19 && coluna > 11 && coluna < 25) ||
+                    (linha == 23 && coluna > 14 && coluna < 25) || (coluna == 12 && linha < 27 && linha > 19) || (coluna == 24 && linha < 23 && linha > 19) )
                     {
                 matriz5[linha][coluna].caractere = ' ';
             }
@@ -296,18 +299,18 @@ void selectMatriz(int matriz, int tamanho)
 int main()
 {
 
-    keybd_event(VK_MENU,0x36,0,0);
+    /*keybd_event(VK_MENU,0x36,0,0);
     keybd_event(VK_RETURN,0x1C,0,0);
     keybd_event(VK_RETURN,0x1C,KEYEVENTF_KEYUP,0);
-    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
+    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);*/
 
-    int resposta;
+    int resposta = 5;
     int tamanho = 0;
 
     do
     {
-        cout << "\n\n\tQual matriz deseja imprimir? (0 para sair).\n\n\t";
-        cin >> resposta;
+        //cout << "\n\n\tQual matriz deseja imprimir? (0 para sair).\n\n\t";
+        //cin >> resposta;
         selectMatriz(resposta, tamanho);
         cout << "\n\n\n";
         system ("pause");
