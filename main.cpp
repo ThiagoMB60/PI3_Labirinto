@@ -19,18 +19,28 @@ matrizGame matriz1[tm1][tm1];
 int posLinha;
 int posColuna;
 
-void printMatriz5(int tamanho)
-{
-
+void cabecalho(int tamanho){
     cout << "\n\n\n\t\t      ";
-    for (int i = 0 ; i < tm5; i++)
+    for (int i = 0 ; i < tamanho; i++)
     {
         cout << i;
         if ( i< 10)
             cout  << " ";
     }
     cout << "\n";
-
+}
+void rodape(int tamanho){
+    cout << "\n\n\t\t      ";
+    for (int i = 0 ; i < tamanho; i++)
+    {
+        cout << i;
+        if ( i< 10)
+            cout  << " ";
+    }
+}
+void printMatriz5(int tamanho)
+{
+    cabecalho(tm5);
     for(int linha = 0; linha < tamanho; linha++)
     {
 
@@ -42,21 +52,13 @@ void printMatriz5(int tamanho)
             cout << matriz5[linha][coluna].caractere;
             cout << " ";
         }
+        cout << "_" << linha;
     }
+    rodape(tm5);
 }
-
 void printMatriz4(int tamanho)
 {
-
-    cout << "\n\n\n\t\t      ";
-    for (int i = 0 ; i < tm4; i++)
-    {
-        cout << i;
-        if ( i< 10)
-            cout  << " ";
-    }
-    cout << "\n";
-
+    cabecalho(tm4);
     for(int linha = 0; linha < tamanho; linha++)
     {
 
@@ -68,21 +70,14 @@ void printMatriz4(int tamanho)
             cout << matriz4[linha][coluna].caractere;
             cout << " ";
         }
+        cout << "_" << linha;
     }
+    rodape(tm4);
 }
 
 void printMatriz3(int tamanho)
 {
-
-    cout << "\n\n\n\t\t      ";
-    for (int i = 0 ; i < tm3; i++)
-    {
-        cout << i;
-        if ( i< 10)
-            cout  << " ";
-    }
-    cout << "\n";
-
+    cabecalho(tm3);
     for(int linha = 0; linha < tamanho; linha++)
     {
 
@@ -94,21 +89,14 @@ void printMatriz3(int tamanho)
             cout << matriz3[linha][coluna].caractere;
             cout << " ";
         }
+        cout << "_" << linha;
     }
+    rodape(tm3);
 }
 
 void printMatriz2(int tamanho)
 {
-
-    cout << "\n\n\n\t\t      ";
-    for (int i = 0 ; i < tm2; i++)
-    {
-        cout << i;
-        if ( i< 10)
-            cout  << " ";
-    }
-    cout << "\n";
-
+    cabecalho(tm2);
     for(int linha = 0; linha < tamanho; linha++)
     {
 
@@ -120,21 +108,14 @@ void printMatriz2(int tamanho)
             cout << matriz2[linha][coluna].caractere;
             cout << " ";
         }
+        cout << "_" << linha;
     }
+    rodape(tm2);
 }
 
 void printMatriz1(int tamanho)
 {
-
-    cout << "\n\n\n\t\t      ";
-    for (int i = 0 ; i < tm1; i++)
-    {
-        cout << i;
-        if ( i< 10)
-            cout  << " ";
-    }
-    cout << "\n";
-
+    cabecalho(tm1);
     for(int linha = 0; linha < tamanho; linha++)
     {
 
@@ -146,7 +127,9 @@ void printMatriz1(int tamanho)
             cout << matriz1[linha][coluna].caractere;
             cout << " ";
         }
+        cout << "_" << linha;
     }
+    rodape(tm1);
 }
 
 void tela5(matrizGame matriz5[][tm5], int tamanho)
@@ -156,19 +139,26 @@ void tela5(matrizGame matriz5[][tm5], int tamanho)
     {
         for(int coluna = 0; coluna < tm5; coluna++)
         {
+            //rota principal
             if ((coluna == tm1 && linha > tm1)||(coluna == 10 && linha > 20 && linha < 30)||
                     (coluna == 16 && linha > 30 && linha < 35)||(coluna == 5 && linha < 34 && linha > 14)||
                     (coluna == 28 && linha > 15 && linha < 38)||(coluna == tm4 && linha < 38 && linha > 9)||
-                    (coluna == 11 && linha < 10 && linha > 4)||(coluna == tm1 && linha < 5))  // condições para colunas
+                    (coluna == 11 && linha < 10 && linha > 4)||(coluna == tm1 && linha < 5) ||
+                    (linha == tm1 && coluna > 10 && coluna <= tm1)||(linha == 30 && coluna >= 10 && coluna <= 16)||
+                    (linha == 34 && coluna < 16 && coluna > 4)||(linha == 15 && coluna > 5 && coluna <29)||
+                    (linha == 37 && coluna > 28 && coluna < tm4)||(linha == 10 && coluna < tm4 && coluna > 10)||
+                    (linha == 5 && coluna > 11 && coluna < 22))  //
             {
 
                 matriz5[linha][coluna].caractere = ' ';
             }
-            else if((linha == tm1 && coluna > 10 && coluna <= tm1)||(linha == 30 && coluna >= 10 && coluna <= 16)||
-                    (linha == 34 && coluna < 16 && coluna > 4)||(linha == 15 && coluna > 5 && coluna <29)||
-                    (linha == 37 && coluna > 28 && coluna < tm4)||(linha == 10 && coluna < tm4 && coluna > 10)||
-                    (linha == 5 && coluna > 11 && coluna < 22))  //condições para linha
-            {
+
+            //rotas alternativas
+            else if((coluna == 3 && linha < 4) || (coluna == 32 && linha < 4) || (coluna > 2 && coluna < 33 && linha == 3) ||
+                    (coluna == 6 && linha < 8) || (coluna == 27 && linha < 8 && linha > 0 ) || (coluna > 5 && coluna < 28 && linha == 7) ||
+                    (coluna == 8 && linha < 14 && linha > 8) || (coluna == 32 && linha < 14 && linha > 4) || (coluna == 36 && linha < 6 && linha > 1) ||
+                    (linha == 13 && coluna > 8 && coluna < 32) || (linha == 5 && coluna > 32 && coluna < 36) || (coluna == 34 && linha < 25 && linha > 11) ||
+                    (linha == 24 && coluna < 40 && coluna > 34 ) || (coluna == 39 && linha < 25 && linha > 0 ) || (linha == 8 && coluna < 40 && coluna > 33)){
                 matriz5[linha][coluna].caractere = ' ';
             }
             else
@@ -180,7 +170,6 @@ void tela5(matrizGame matriz5[][tm5], int tamanho)
 
     printMatriz5(tamanho);
 }
-
 void tela4(matrizGame matriz4[][tm4], int tamanho)
 {
     for(int linha = 0; linha < tm4; linha++)
@@ -305,7 +294,7 @@ int main()
     keybd_event(VK_RETURN,0x1C,KEYEVENTF_KEYUP,0);
     keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
 
-    int resposta = 0;
+    int resposta;
     int tamanho = 0;
 
     do
