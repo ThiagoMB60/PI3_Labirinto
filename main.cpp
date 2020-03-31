@@ -38,6 +38,22 @@ void rodape(int tamanho){
             cout  << " ";
     }
 }
+
+void bandeira(int tamanho){
+    for(int linha = 0; linha < tamanho; linha++)
+    {
+        for(int coluna = 0; coluna < tamanho; coluna++)
+        {
+            if ((matriz5[linha][coluna].caractere == ' ') && ((matriz5[linha][coluna+1].caractere == ' ' &&
+                (matriz5[linha-1][coluna].caractere == ' ' || matriz5[linha+1][coluna].caractere == ' ')) ||
+                (matriz5[linha][coluna-1].caractere == ' ' && (matriz5[linha-1][coluna].caractere == ' ' ||
+                matriz5[linha+1][coluna].caractere == ' ')))){
+                    matriz5[linha][coluna].caractere = 223;
+                }
+        }
+    }
+
+}
 void printMatriz5(int tamanho)
 {
     cabecalho(tm5);
@@ -134,7 +150,6 @@ void printMatriz1(int tamanho)
 
 void tela5(matrizGame matriz5[][tm5], int tamanho)
 {
-
     for(int linha = 0; linha < tm5; linha++)
     {
         for(int coluna = 0; coluna < tm5; coluna++)
@@ -175,8 +190,11 @@ void tela5(matrizGame matriz5[][tm5], int tamanho)
             {
                 matriz5[linha][coluna].caractere = 'X';
             }
+
         }
     }
+    bandeira(tm5);
+
 
     printMatriz5(tamanho);
 }
