@@ -8,13 +8,13 @@ struct matrizGame
     char caractere;
 };
 
-const int tm1 = 21, tm2 = 26, tm3 = 31, tm4 = 36, tm5 = 41;
+const int tm1 = 21, tm2 = 26, tm3 = 31, tm4 = 36, tm5 = 41, tmax = tm5;
 
-matrizGame matriz5[tm5][tm5];
-matrizGame matriz4[tm4][tm4];
-matrizGame matriz3[tm3][tm3];
-matrizGame matriz2[tm2][tm2];
-matrizGame matriz1[tm1][tm1];
+matrizGame matriz5[tmax][tmax];
+matrizGame matriz4[tmax][tmax];
+matrizGame matriz3[tmax][tmax];
+matrizGame matriz2[tmax][tmax];
+matrizGame matriz1[tmax][tmax];
 
 int posLinha;
 int posColuna;
@@ -39,24 +39,23 @@ void rodape(int tamanho){
     }
 }
 
-void bandeira(int tamanho){
+void bandeira(matrizGame matMax[][tmax], int tamanho){
     for(int linha = 0; linha < tamanho; linha++)
     {
         for(int coluna = 0; coluna < tamanho; coluna++)
         {
-            if ((matriz5[linha][coluna].caractere == ' ') && ((matriz5[linha][coluna+1].caractere == ' ' &&
-                (matriz5[linha-1][coluna].caractere == ' ' || matriz5[linha+1][coluna].caractere == ' ')) ||
-                (matriz5[linha][coluna-1].caractere == ' ' && (matriz5[linha-1][coluna].caractere == ' ' ||
-                matriz5[linha+1][coluna].caractere == ' ')))){
-                    matriz5[linha][coluna].caractere = 223;
+            if ((matMax[linha][coluna].caractere == ' ') && ((matMax[linha][coluna+1].caractere == ' ' &&
+                (matMax[linha-1][coluna].caractere == ' ' || matMax[linha+1][coluna].caractere == ' ')) ||
+                (matMax[linha][coluna-1].caractere == ' ' && (matMax[linha-1][coluna].caractere == ' ' ||
+                matMax[linha+1][coluna].caractere == ' ')))){
+                    matMax[linha][coluna].caractere = 220;
                 }
         }
     }
-
 }
-void printMatriz5(int tamanho)
-{
-    cabecalho(tm5);
+
+void printMatriz(matrizGame matMax[][tmax], int tamanho){
+    cabecalho(tamanho);
     for(int linha = 0; linha < tamanho; linha++)
     {
 
@@ -65,90 +64,15 @@ void printMatriz5(int tamanho)
             cout << " ";
         for(int coluna = 0; coluna < tamanho; coluna++)
         {
-            cout << matriz5[linha][coluna].caractere;
+            cout << matMax[linha][coluna].caractere;
             cout << " ";
         }
         cout << "_" << linha;
     }
-    rodape(tm5);
-}
-void printMatriz4(int tamanho)
-{
-    cabecalho(tm4);
-    for(int linha = 0; linha < tamanho; linha++)
-    {
-
-        cout << "\n\t\t  " << linha<< " _";
-        if (linha < 10)
-            cout << " ";
-        for(int coluna = 0; coluna < tamanho; coluna++)
-        {
-            cout << matriz4[linha][coluna].caractere;
-            cout << " ";
-        }
-        cout << "_" << linha;
-    }
-    rodape(tm4);
+    rodape(tamanho);
 }
 
-void printMatriz3(int tamanho)
-{
-    cabecalho(tm3);
-    for(int linha = 0; linha < tamanho; linha++)
-    {
-
-        cout << "\n\t\t  " << linha<< " _";
-        if (linha < 10)
-            cout << " ";
-        for(int coluna = 0; coluna < tamanho; coluna++)
-        {
-            cout << matriz3[linha][coluna].caractere;
-            cout << " ";
-        }
-        cout << "_" << linha;
-    }
-    rodape(tm3);
-}
-
-void printMatriz2(int tamanho)
-{
-    cabecalho(tm2);
-    for(int linha = 0; linha < tamanho; linha++)
-    {
-
-        cout << "\n\t\t  " << linha<< " _";
-        if (linha < 10)
-            cout << " ";
-        for(int coluna = 0; coluna < tamanho; coluna++)
-        {
-            cout << matriz2[linha][coluna].caractere;
-            cout << " ";
-        }
-        cout << "_" << linha;
-    }
-    rodape(tm2);
-}
-
-void printMatriz1(int tamanho)
-{
-    cabecalho(tm1);
-    for(int linha = 0; linha < tamanho; linha++)
-    {
-
-        cout << "\n\t\t  " << linha<< " _";
-        if (linha < 10)
-            cout << " ";
-        for(int coluna = 0; coluna < tamanho; coluna++)
-        {
-            cout << matriz1[linha][coluna].caractere;
-            cout << " ";
-        }
-        cout << "_" << linha;
-    }
-    rodape(tm1);
-}
-
-void tela5(matrizGame matriz5[][tm5], int tamanho)
+void tela5(matrizGame matriz5[][tmax])
 {
     for(int linha = 0; linha < tm5; linha++)
     {
@@ -193,12 +117,10 @@ void tela5(matrizGame matriz5[][tm5], int tamanho)
 
         }
     }
-    bandeira(tm5);
-
-
-    printMatriz5(tamanho);
+    bandeira(matriz5,tm5);
+    printMatriz(matriz5,tm5);
 }
-void tela4(matrizGame matriz4[][tm4], int tamanho)
+void tela4(matrizGame matriz4[][tmax])
 {
     for(int linha = 0; linha < tm4; linha++)
     {
@@ -218,9 +140,10 @@ void tela4(matrizGame matriz4[][tm4], int tamanho)
             }
         }
     }
-    printMatriz4(tamanho);
+    bandeira(matriz4,tm4);
+    printMatriz(matriz4,tm4);
 }
-void tela3(matrizGame matriz3[][tm3], int tamanho)
+void tela3(matrizGame matriz3[][tmax])
 {
     for(int linha = 0; linha < tm3; linha++)
     {
@@ -240,9 +163,10 @@ void tela3(matrizGame matriz3[][tm3], int tamanho)
             }
         }
     }
-    printMatriz3(tamanho);
+    bandeira(matriz4,tm4);
+    printMatriz(matriz3,tm3);
 }
-void tela2(matrizGame matriz2[][tm2], int tamanho)
+void tela2(matrizGame matriz2[][tmax])
 {
     for(int linha = 0; linha < tm2; linha++)
     {
@@ -262,9 +186,10 @@ void tela2(matrizGame matriz2[][tm2], int tamanho)
             }
         }
     }
-    printMatriz2(tamanho);
+    bandeira(matriz4,tm4);
+    printMatriz(matriz2,tm2);
 }
-void tela1(matrizGame matriz1[][tm1], int tamanho)
+void tela1(matrizGame matriz1[][tmax])
 {
     for(int linha = 0; linha < tm1; linha++)
     {
@@ -284,52 +209,47 @@ void tela1(matrizGame matriz1[][tm1], int tamanho)
             }
         }
     }
-    printMatriz1(tamanho);
+    bandeira(matriz4,tm4);
+    printMatriz(matriz1,tm1);
 }
 
-void selectMatriz(int matriz, int tamanho)
+void selectMatriz(int matriz)
 {
 
     switch(matriz)
     {
     case 1:
-        tamanho = tm1;
-        tela1(matriz1, tamanho);
+        tela1(matriz1);
         break;
     case 2:
-        tamanho = tm2;
-        tela2(matriz2, tamanho);
+        tela2(matriz2);
         break;
     case 3:
-        tamanho = tm3;
-        tela3(matriz3, tamanho);
+        tela3(matriz3);
         break;
     case 4:
-        tamanho = tm4;
-        tela4(matriz4, tamanho);
+        tela4(matriz4);
         break;
     case 5:
-        tamanho = tm5;
-        tela5(matriz5, tamanho);
+        tela5(matriz5);
     }
 }
 
 int main()
 {
 
-    /*keybd_event(VK_MENU,0x36,0,0);
+   keybd_event(VK_MENU,0x36,0,0);
     keybd_event(VK_RETURN,0x1C,0,0);
     keybd_event(VK_RETURN,0x1C,KEYEVENTF_KEYUP,0);
-    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);*/
+    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
 
-    int resposta = 5;
-    int tamanho = 0;
+    int resposta;
 
     do
     {
-        //cout << "\n\n\tQual matriz deseja imprimir? (0 para sair).\n\n\t";
-        //cin >> resposta;
-        selectMatriz(resposta, tamanho);
+        cout << "\n\n\tQual matriz deseja imprimir? (0 para sair).\n\n\t";
+        cin >> resposta;
+        selectMatriz(resposta);
         cout << "\n\n\n";
         system ("pause");
         system ("cls");
