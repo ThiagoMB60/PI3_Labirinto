@@ -27,11 +27,12 @@ void cabecalho(int tamanho);
 void rodape(int tamanho);
 void bandeira(matrizGame marMax[][tmax],int tamanho);
 void printMatriz(matrizGame matMax[][tmax], int tamanho);
-void tela5(matrizGame matriz5[][tmax],bool subir,bool descer, bool direita, bool esquerda);
-void tela4(matrizGame matriz4[][tmax],bool subir,bool descer, bool direita, bool esquerda);
-void tela3(matrizGame matriz3[][tmax],bool subir,bool descer, bool direita, bool esquerda);
-void tela2(matrizGame matriz2[][tmax],bool subir,bool descer, bool direita, bool esquerda);
-void tela1(matrizGame matriz1[][tmax],bool subir,bool descer, bool direita, bool esquerda);
+void tela5(matrizGame matriz5[][tmax]);
+void tela4(matrizGame matriz4[][tmax]);
+void tela3(matrizGame matriz3[][tmax]);
+void tela2(matrizGame matriz2[][tmax]);
+void tela1(matrizGame matriz1[][tmax]);
+void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda);
 void selectMatriz(int matriz);
 void movimento();
 
@@ -42,17 +43,12 @@ int main()
     keybd_event(VK_RETURN,0x1C,KEYEVENTF_KEYUP,0);
     keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);*/
 
-    int resposta;
+    int resposta = 5;
+    selectMatriz(resposta);
 
     do
     {
-        cout << "\n\n\tQual matriz deseja imprimir? (0 para sair) .\n\n\t";
-        cin >> resposta;
-        selectMatriz(resposta);
-        cout << "\n\n\n";
-        system ("pause");
-        system ("cls");
-
+        movimento();
     }
     while(resposta !=0);
 }
@@ -99,7 +95,6 @@ void bandeira(matrizGame matMax[][tmax], int tamanho)
 
 void printMatriz(matrizGame matMax[][tmax], int tamanho)
 {
-
     cabecalho(tamanho);
     for(int linha = 0; linha < tamanho; linha++)
     {
@@ -115,14 +110,24 @@ void printMatriz(matrizGame matMax[][tmax], int tamanho)
         cout << "_" << linha;
     }
     rodape(tamanho);
-    movimento();
 }
 
-void tela5(matrizGame matriz5[][tmax],bool subir,bool descer, bool direita, bool esquerda)
+void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
 {
     if(subir == true)
     {
-        posicaoI--;
+       while(1){
+
+        if(matriz5[posicaoI][posicaoJ].caractere == 220){
+            break;
+        }
+        else if(matriz5[posicaoI][posicaoJ].caractere == 'X'){
+            break;
+        }else{
+            posicaoI--;
+
+        }
+       }
     }
     else if(descer == true)
     {
@@ -136,57 +141,57 @@ void tela5(matrizGame matriz5[][tmax],bool subir,bool descer, bool direita, bool
     {
         posicaoJ--;
     }
+}
 
-    do
+void tela5(matrizGame matriz5[][tmax])
+{
+
+    for(int linha = 0; linha < tm5; linha++)
     {
-        for(int linha = 0; linha < tm5; linha++)
+        for(int coluna = 0; coluna < tm5; coluna++)
         {
-            for(int coluna = 0; coluna < tm5; coluna++)
+            //rota principal
+            if ((coluna == tm1 && linha > tm1)||(coluna == 10 && linha > 20 && linha < 30)||
+                    (coluna == 16 && linha > 30 && linha < 35)||(coluna == 5 && linha < 34 && linha > 14)||
+                    (coluna == 28 && linha > 15 && linha < 38)||(coluna == tm4 && linha < 38 && linha > 9)||
+                    (coluna == 11 && linha < 10 && linha > 4)||(coluna == tm1 && linha < 5) ||
+                    (linha == tm1 && coluna > 10 && coluna <= tm1)||(linha == 30 && coluna >= 10 && coluna <= 16)||
+                    (linha == 34 && coluna < 16 && coluna > 4)||(linha == 15 && coluna > 5 && coluna <29)||
+                    (linha == 37 && coluna > 28 && coluna < tm4)||(linha == 10 && coluna < tm4 && coluna > 10)||
+                    (linha == 5 && coluna > 11 && coluna < 22))
             {
-                //rota principal
-                if ((coluna == tm1 && linha > tm1)||(coluna == 10 && linha > 20 && linha < 30)||
-                        (coluna == 16 && linha > 30 && linha < 35)||(coluna == 5 && linha < 34 && linha > 14)||
-                        (coluna == 28 && linha > 15 && linha < 38)||(coluna == tm4 && linha < 38 && linha > 9)||
-                        (coluna == 11 && linha < 10 && linha > 4)||(coluna == tm1 && linha < 5) ||
-                        (linha == tm1 && coluna > 10 && coluna <= tm1)||(linha == 30 && coluna >= 10 && coluna <= 16)||
-                        (linha == 34 && coluna < 16 && coluna > 4)||(linha == 15 && coluna > 5 && coluna <29)||
-                        (linha == 37 && coluna > 28 && coluna < tm4)||(linha == 10 && coluna < tm4 && coluna > 10)||
-                        (linha == 5 && coluna > 11 && coluna < 22))
-                {
 
-                    matriz5[linha][coluna].caractere = ' ';
-                }
+                matriz5[linha][coluna].caractere = ' ';
+            }
 
-                //rotas alternativas
-                else if((coluna == 3 && linha < 4) || (coluna == 32 && linha < 4) || (coluna > 2 && coluna < 33 && linha == 3) ||
-                        (coluna == 6 && linha < 8) || (coluna == 27 && linha < 8 && linha > 0 ) || (coluna > 5 && coluna < 28 && linha == 7) ||
-                        (coluna == 8 && linha < 14 && linha > 8) || (coluna == 32 && linha < 14 && linha > 4) || (coluna == 36 && linha < 6 && linha > 1) ||
-                        (linha == 13 && coluna > 8 && coluna < 32) || (linha == 5 && coluna > 32 && coluna < 36) || (coluna == 34 && linha < 25 && linha > 11) ||
-                        (linha == 24 && coluna < 40 && coluna > 34 ) || (coluna == 39 && linha < 25 && linha > 0) || (linha == 8 && coluna < 40 && coluna > 33) ||
-                        (coluna == 36 && linha == 9) || (coluna == 31 && linha < 30 && linha > 14) || (linha == 29 && coluna > 31 && coluna < 39) ||
-                        (linha > 29 && coluna == 38 && linha < 40) || (linha == 39 && coluna > 22&& coluna < 38) || (coluna == 23 && linha < 39 && linha > 31) ||
-                        (linha == 32 && coluna < 32 && coluna > 23)|| (coluna == 32 && linha < 36 && linha > 29)|| (coluna == 1 && linha < 10 && linha > 0)||
-                        (coluna > 1 && linha == 9 && coluna < 8) || (coluna == 3 && linha < 37 && linha > 23) || (coluna < 21 && linha == 36 && coluna > 3) ||
-                        (coluna == 19 && linha < 36 && linha > 28) || (linha == 29 && coluna > 19 && coluna < 27) || (coluna == 26 && linha < 29 && linha > 16) ||
-                        (linha == 17 && coluna > 6 && coluna < 26) || (coluna == 7 && linha < 33 && linha > 17) || (linha == 32 && coluna > 6 && coluna < 14) ||
-                        (linha == 39 && coluna > 0 && coluna < 21) || (linha == 21 && coluna > 0 && coluna < 4) || (coluna == 1 && linha < 39 && linha > 21) ||
-                        (coluna == 3 && linha < 21 && linha > 10) || (linha == 27 && coluna > 11 && coluna < 20) || (linha == 19 && coluna > 11 && coluna < 25) ||
-                        (linha == 23 && coluna > 14 && coluna < 25) || (coluna == 12 && linha < 27 && linha > 19) || (coluna == 24 && linha < 23 && linha > 19) )
-                {
-                    matriz5[linha][coluna].caractere = ' ';
-                }
-                else
-                {
-                    matriz5[linha][coluna].caractere = 'X';
-                }
+            //rotas alternativas
+            else if((coluna == 3 && linha < 4) || (coluna == 32 && linha < 4) || (coluna > 2 && coluna < 33 && linha == 3) ||
+                    (coluna == 6 && linha < 8) || (coluna == 27 && linha < 8 && linha > 0 ) || (coluna > 5 && coluna < 28 && linha == 7) ||
+                    (coluna == 8 && linha < 14 && linha > 8) || (coluna == 32 && linha < 14 && linha > 4) || (coluna == 36 && linha < 6 && linha > 1) ||
+                    (linha == 13 && coluna > 8 && coluna < 32) || (linha == 5 && coluna > 32 && coluna < 36) || (coluna == 34 && linha < 25 && linha > 11) ||
+                    (linha == 24 && coluna < 40 && coluna > 34 ) || (coluna == 39 && linha < 25 && linha > 0) || (linha == 8 && coluna < 40 && coluna > 33) ||
+                    (coluna == 36 && linha == 9) || (coluna == 31 && linha < 30 && linha > 14) || (linha == 29 && coluna > 31 && coluna < 39) ||
+                    (linha > 29 && coluna == 38 && linha < 40) || (linha == 39 && coluna > 22&& coluna < 38) || (coluna == 23 && linha < 39 && linha > 31) ||
+                    (linha == 32 && coluna < 32 && coluna > 23)|| (coluna == 32 && linha < 36 && linha > 29)|| (coluna == 1 && linha < 10 && linha > 0)||
+                    (coluna > 1 && linha == 9 && coluna < 8) || (coluna == 3 && linha < 37 && linha > 23) || (coluna < 21 && linha == 36 && coluna > 3) ||
+                    (coluna == 19 && linha < 36 && linha > 28) || (linha == 29 && coluna > 19 && coluna < 27) || (coluna == 26 && linha < 29 && linha > 16) ||
+                    (linha == 17 && coluna > 6 && coluna < 26) || (coluna == 7 && linha < 33 && linha > 17) || (linha == 32 && coluna > 6 && coluna < 14) ||
+                    (linha == 39 && coluna > 0 && coluna < 21) || (linha == 21 && coluna > 0 && coluna < 4) || (coluna == 1 && linha < 39 && linha > 21) ||
+                    (coluna == 3 && linha < 21 && linha > 10) || (linha == 27 && coluna > 11 && coluna < 20) || (linha == 19 && coluna > 11 && coluna < 25) ||
+                    (linha == 23 && coluna > 14 && coluna < 25) || (coluna == 12 && linha < 27 && linha > 19) || (coluna == 24 && linha < 23 && linha > 19) )
+            {
+                matriz5[linha][coluna].caractere = ' ';
+            }
+            else
+            {
+                matriz5[linha][coluna].caractere = 'X';
             }
         }
-
-        matriz5[posicaoI][posicaoJ].caractere = 206;
-        bandeira(matriz5,tm5);
-        printMatriz(matriz5,tm5);
     }
-    while(1);
+
+    matriz5[posicaoI][posicaoJ].caractere = 206;
+    bandeira(matriz5,tm5);
+    printMatriz(matriz5,tm5);
 }
 
 void tela4(matrizGame matriz4[][tmax])
@@ -303,72 +308,49 @@ void selectMatriz(int matriz)
         tela4(matriz4);
         break;
     case 5:
-        tela5(matriz5,0,0,0,0);
+        tela5(matriz5);
     }
 }
 
 void movimento()
 {
-    char direcao[100];
+    char direcao[40];
 
-    cout << "\nPara qual direcao deseja ir? ";
+    cout << "\n\nPara qual direcao deseja ir? ";
     fflush(stdin);
     gets(direcao);
 
-
     for(int i = 0; i < strlen(direcao); i++)
     {
-        char letra = direcao[i];
-
-        switch(direcao[i])
+        if (direcao[i] == 119)      //para cima
         {
-        case 'w':
             system("CLS");
-            tela5(matriz5, 1,0,0,0);
-            break;
-        case 's':
-            system("CLS");
-            tela5(matriz5, 0,1,0,0);
-            break;
-        case 'a':
-            system("CLS");
-            tela5(matriz5, 0,0,0,1);
-            break;
-        case 'd':
-            system("CLS");
-            tela5(matriz5, 0,0,1,0);
-            break;
-        default:
-            system("CLS");
-            tela5(matriz5,0,0,0,0);
-            break;
+            alteraPosicao(1,0,0,0);
+            tela5(matriz5);
         }
-
+        else if (direcao[i] == 100)  //para direita
+        {
+            system("CLS");
+            alteraPosicao(0,0,1,0);
+            tela5(matriz5);
+        }
+        else if (direcao[i] == 115) //para baixo
+        {
+            system("CLS");
+            alteraPosicao(0,1,0,0);
+            tela5(matriz5);
+        }
+        else if (direcao[i] == 97)   //para esqueda
+        {
+            system("CLS");
+            alteraPosicao(0,0,0,1);
+            tela5(matriz5);
+        }
+        else
+        {
+            system("CLS");
+            alteraPosicao(0,0,0,0);
+            tela5(matriz5);
+        }
     }
 }
-
-           /*if (letra == 119)      //para cima
-            {
-            system("CLS");
-            tela5(matriz5, 1,0,0,0);
-            }
-            else if (letra == 100)  //para direita
-            {
-            system("CLS");
-            tela5(matriz5, 0,0,1,0);
-            }
-            else if (letra == 115) //para baixo
-            {
-                system("CLS");
-                tela5(matriz5, 0,1,0,0);
-            }
-            else if (letra == 97)   //para esqueda
-            {
-                system("CLS");
-                tela5(matriz5, 0,0,0,1);
-            }
-            else
-            {
-                system("CLS");
-                tela5(matriz5,0,0,0,0);
-            }*/
