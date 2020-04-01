@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <conio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <locale.h>
 
 using namespace std;
@@ -307,29 +309,66 @@ void selectMatriz(int matriz)
 
 void movimento()
 {
-    int fase;
+    char direcao[100];
 
     cout << "\nPara qual direcao deseja ir? ";
+    fflush(stdin);
+    gets(direcao);
 
-    fase = getch();
-    if (fase == 72)      //para cima
+
+    for(int i = 0; i < strlen(direcao); i++)
     {
-        system("CLS");
-        tela5(matriz5, 1,0,0,0);
-    }
-    else if (fase == 77)  //para direita
-    {
-        system("CLS");
-        tela5(matriz5, 0,0,1,0);
-    }
-    else if (fase == 80) //para baixo
-    {
-        system("CLS");
-        tela5(matriz5, 0,1,0,0);
-    }
-    else if (fase == 75)   //para esqueda
-    {
-        system("CLS");
-        tela5(matriz5, 0,0,0,1);
+        char letra = direcao[i];
+
+        switch(direcao[i])
+        {
+        case 'w':
+            system("CLS");
+            tela5(matriz5, 1,0,0,0);
+            break;
+        case 's':
+            system("CLS");
+            tela5(matriz5, 0,1,0,0);
+            break;
+        case 'a':
+            system("CLS");
+            tela5(matriz5, 0,0,0,1);
+            break;
+        case 'd':
+            system("CLS");
+            tela5(matriz5, 0,0,1,0);
+            break;
+        default:
+            system("CLS");
+            tela5(matriz5,0,0,0,0);
+            break;
+        }
+
     }
 }
+
+           /*if (letra == 119)      //para cima
+            {
+            system("CLS");
+            tela5(matriz5, 1,0,0,0);
+            }
+            else if (letra == 100)  //para direita
+            {
+            system("CLS");
+            tela5(matriz5, 0,0,1,0);
+            }
+            else if (letra == 115) //para baixo
+            {
+                system("CLS");
+                tela5(matriz5, 0,1,0,0);
+            }
+            else if (letra == 97)   //para esqueda
+            {
+                system("CLS");
+                tela5(matriz5, 0,0,0,1);
+            }
+            else
+            {
+                system("CLS");
+                tela5(matriz5,0,0,0,0);
+            }*/

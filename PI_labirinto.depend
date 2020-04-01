@@ -10,10 +10,12 @@
 	<stdlib.h>
 	<locale.h>
 
-1585685218 source:c:\users\rafae\desktop\aleatorio\pi3_labirinto\main.cpp
+1585752418 source:c:\users\rafae\desktop\aleatorio\pi3_labirinto\main.cpp
 	<iostream>
 	<windows.h>
 	<conio.h>
 	<stdlib.h>
+	<stdio.h>
+	<string.h>
 	<locale.h>
 
