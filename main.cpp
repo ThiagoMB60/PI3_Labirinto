@@ -116,18 +116,6 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
 {
     if(subir == true)
     {
-       while(1){
-
-        if(matriz5[posicaoI][posicaoJ].caractere == 220){
-            break;
-        }
-        else if(matriz5[posicaoI][posicaoJ].caractere == 'X'){
-            break;
-        }else{
-            posicaoI--;
-
-        }
-       }
     }
     else if(descer == true)
     {
