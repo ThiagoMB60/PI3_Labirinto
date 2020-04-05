@@ -11,28 +11,32 @@ using namespace std;
 struct matrizGame
 {
     char caractere;  //0 = ' '; 1 = 'X'; 2  = 206; 3 = 220;
-    int indice = 0;
+    int indice;
 };
 const int tm1 = 21, tm2 = 26, tm3 = 31, tm4 = 36, tm5 = 41, tmax = tm5;
 
 int posLinha;
 int posColuna;
-int posicaoI = 40, posicaoJ = 21;
+int posicaoI = 0, posicaoJ = 0;
 matrizGame matriz5[tmax][tmax];
 matrizGame matriz4[tmax][tmax];
 matrizGame matriz3[tmax][tmax];
 matrizGame matriz2[tmax][tmax];
 matrizGame matriz1[tmax][tmax];
+matrizGame matriztuto1[tmax][tmax];
 
 void cabecalho(int tamanho);
 void rodape(int tamanho);
 void bandeira(matrizGame marMax[][tmax],int tamanho);
 void printMatriz(matrizGame matMax[][tmax], int tamanho);
+
 void tela5(matrizGame matriz5[][tmax]);
 void tela4(matrizGame matriz4[][tmax]);
 void tela3(matrizGame matriz3[][tmax]);
 void tela2(matrizGame matriz2[][tmax]);
 void tela1(matrizGame matriz1[][tmax]);
+void tuto1(matrizGame matriztuto1[][tmax]);
+
 void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda);
 void selectMatriz(int matriz);
 void movimento();
@@ -219,17 +223,22 @@ void tela4(matrizGame matriz4[][tmax])
             if (1==0)
             {
                 matriz4[linha][coluna].caractere = ' ';
+                matriz4[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
                 matriz4[linha][coluna].caractere = ' ';
+                matriz4[linha][coluna].indice = 0;
             }
             else
             {
                 matriz4[linha][coluna].caractere = 'X';
+                matriz4[linha][coluna].indice = 1;
             }
         }
     }
+    matriz5[posicaoI][posicaoJ].caractere = 206;
+    matriz5[posicaoI][posicaoJ].indice = 2;
     bandeira(matriz4,tm4);
     printMatriz(matriz4,tm4);
 }
@@ -243,17 +252,22 @@ void tela3(matrizGame matriz3[][tmax])
             if (1==0)
             {
                 matriz3[linha][coluna].caractere = ' ';
+                matriz3[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
                 matriz3[linha][coluna].caractere = ' ';
+                matriz3[linha][coluna].indice = 0;
             }
             else
             {
                 matriz3[linha][coluna].caractere = 'X';
+                matriz3[linha][coluna].indice = 1;
             }
         }
     }
+    matriz5[posicaoI][posicaoJ].caractere = 206;
+    matriz5[posicaoI][posicaoJ].indice = 2;
     bandeira(matriz4,tm4);
     printMatriz(matriz3,tm3);
 }
@@ -267,17 +281,22 @@ void tela2(matrizGame matriz2[][tmax])
             if (1==0)
             {
                 matriz2[linha][coluna].caractere = ' ';
+                matriz2[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
                 matriz2[linha][coluna].caractere = ' ';
+                matriz2[linha][coluna].indice = 0;
             }
             else
             {
                 matriz2[linha][coluna].caractere = 'X';
+                matriz2[linha][coluna].indice = 1;
             }
         }
     }
+    matriz5[posicaoI][posicaoJ].caractere = 206;
+    matriz5[posicaoI][posicaoJ].indice = 2;
     bandeira(matriz4,tm4);
     printMatriz(matriz2,tm2);
 }
@@ -291,39 +310,82 @@ void tela1(matrizGame matriz1[][tmax])
             if (1==0)
             {
                 matriz1[linha][coluna].caractere = ' ';
+                matriz1[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
                 matriz1[linha][coluna].caractere = ' ';
+                matriz1[linha][coluna].indice = 0;
             }
             else
             {
                 matriz1[linha][coluna].caractere = 'X';
+                matriz1[linha][coluna].indice = 1;
             }
         }
     }
+    matriz5[posicaoI][posicaoJ].caractere = 206;
+    matriz5[posicaoI][posicaoJ].indice = 2;
     bandeira(matriz4,tm4);
     printMatriz(matriz1,tm1);
 }
 
+void tuto1(matrizGame matriztuto1[][tmax]){
+    for(int linha = 0; linha < tm1; linha++)
+    {
+        for(int coluna = 0; coluna < tm1; coluna++)
+        {
+            if (1==0)
+            {
+                matriztuto1[linha][coluna].caractere = ' ';
+                matriztuto1[linha][coluna].indice = 0;
+            }
+            else if (1==0)
+            {
+                matriztuto1[linha][coluna].caractere = ' ';
+                matriztuto1[linha][coluna].indice = 0;
+            }
+            else
+            {
+                matriztuto1[linha][coluna].caractere = 'X';
+                matriztuto1[linha][coluna].indice = 1;
+            }
+        }
+    }
+    matriz5[posicaoI][posicaoJ].caractere = 206;
+    matriz5[posicaoI][posicaoJ].indice = 2;
+    bandeira(matriztuto1,tm1);
+    printMatriz(matriztuto1,tm1);
+
+}
 void selectMatriz(int matriz)
 {
 
     switch(matriz)
     {
     case 1:
+        posicaoI = 20;
+        posicaoJ = 11;
         tela1(matriz1);
         break;
     case 2:
+        posicaoI = 25;
+        posicaoJ = 13;
         tela2(matriz2);
         break;
     case 3:
+        posicaoI = 30;
+        posicaoJ = 16;
         tela3(matriz3);
         break;
     case 4:
+        posicaoI = 35;
+        posicaoJ = 18;
         tela4(matriz4);
         break;
     case 5:
+        posicaoI = 40;
+        posicaoJ = 21;
         tela5(matriz5);
     }
 }
