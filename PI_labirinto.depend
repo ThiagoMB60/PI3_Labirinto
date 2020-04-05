@@ -3,3 +3,28 @@
 	<iostream>
 	<windows.h>
 
+1585679719 source:c:\users\rafae\desktop\pi3_labirinto-master\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<stdlib.h>
+	<locale.h>
+
+1585785010 source:c:\users\rafae\desktop\aleatorio\pi3_labirinto\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<locale.h>
+
+1586104411 source:c:\users\thiago\downloads\pi3_labirinto-rafael\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<locale.h>
+
