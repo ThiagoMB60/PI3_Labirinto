@@ -116,19 +116,7 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
 {
     if(subir == true)
     {
-
-       while(1){
-
-        if(matriz5[posicaoI][posicaoJ].caractere == 220){
-            break;
-        }
-        else if(matriz5[posicaoI][posicaoJ].caractere == 'X'){
-            break;
-        }else{
-            posicaoI--;
-
-        }
-       }
+        posicaoI--;
     }
     else if(descer == true)
     {
@@ -321,7 +309,7 @@ void movimento()
     fflush(stdin);
     gets(direcao);
 
-    for(int i = 0; i < strlen(direcao); i++)
+    for(int i = 0; i < (strlen(direcao)); i++)
     {
         if (direcao[i] == 119)      //para cima
         {
