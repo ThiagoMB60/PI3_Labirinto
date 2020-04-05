@@ -10,7 +10,8 @@ using namespace std;
 
 struct matrizGame
 {
-    char caractere;
+    char caractere;  //0 = ' '; 1 = 'X'; 2  = 206; 3 = 220;
+    int indice = 0;
 };
 const int tm1 = 21, tm2 = 26, tm3 = 31, tm4 = 36, tm5 = 41, tmax = tm5;
 
@@ -88,6 +89,7 @@ void bandeira(matrizGame matMax[][tmax], int tamanho)
                             matMax[linha+1][coluna].caractere == ' '))))
             {
                 matMax[linha][coluna].caractere = 220;
+                matMax[linha][coluna].indice = 3;
             }
         }
     }
@@ -116,19 +118,39 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
 {
     if(subir == true)
     {
-        posicaoI--;
+        while((matriz5[posicaoI][posicaoJ].indice != 3)){
+            if((matriz5[posicaoI-1][posicaoJ].indice == 1)){
+                break;
+            }
+            posicaoI--;
+        }
     }
     else if(descer == true)
     {
-        posicaoI++;
+        while((matriz5[posicaoI][posicaoJ].indice != 3)){
+            if((matriz5[posicaoI+1][posicaoJ].indice == 1)){
+                break;
+            }
+            posicaoI++;
+        }
     }
     else if(direita == true)
     {
-        posicaoJ++;
+        while((matriz5[posicaoI][posicaoJ].indice != 3)){
+            if((matriz5[posicaoI][posicaoJ+1].indice == 1)){
+                break;
+            }
+            posicaoJ++;
+        }
     }
     else if(esquerda == true)
     {
-        posicaoJ--;
+        while((matriz5[posicaoI][posicaoJ].indice != 3)){
+            if((matriz5[posicaoI][posicaoJ-1].indice == 1)){
+                break;
+            }
+            posicaoJ--;
+        }
     }
 }
 
@@ -151,6 +173,7 @@ void tela5(matrizGame matriz5[][tmax])
             {
 
                 matriz5[linha][coluna].caractere = ' ';
+                matriz5[linha][coluna].indice = 0;
             }
 
             //rotas alternativas
@@ -170,17 +193,21 @@ void tela5(matrizGame matriz5[][tmax])
                     (linha == 23 && coluna > 14 && coluna < 25) || (coluna == 12 && linha < 27 && linha > 19) || (coluna == 24 && linha < 23 && linha > 19) )
             {
                 matriz5[linha][coluna].caractere = ' ';
+                matriz5[linha][coluna].indice = 0;
             }
             else
             {
                 matriz5[linha][coluna].caractere = 'X';
+                matriz5[linha][coluna].indice = 1;
             }
         }
     }
 
     matriz5[posicaoI][posicaoJ].caractere = 206;
+    matriz5[posicaoI][posicaoJ].indice = 2;
     bandeira(matriz5,tm5);
     printMatriz(matriz5,tm5);
+    Sleep(1000);
 }
 
 void tela4(matrizGame matriz4[][tmax])
@@ -309,7 +336,7 @@ void movimento()
     fflush(stdin);
     gets(direcao);
 
-    for(int i = 0; i < (strlen(direcao)); i++)
+    for(int i = 0; i < strlen(direcao); i++)
     {
         if (direcao[i] == 119)      //para cima
         {

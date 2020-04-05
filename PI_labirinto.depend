@@ -19,3 +19,12 @@
 	<string.h>
 	<locale.h>
 
+1586107124 source:c:\users\rafae\desktop\pi3_labirinto\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<locale.h>
+
