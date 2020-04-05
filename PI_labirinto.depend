@@ -10,6 +10,7 @@
 	<stdlib.h>
 	<locale.h>
 
+<<<<<<< HEAD
 1585785010 source:c:\users\rafae\desktop\aleatorio\pi3_labirinto\main.cpp
 	<iostream>
 	<windows.h>
@@ -20,6 +21,9 @@
 	<locale.h>
 
 1586104411 source:c:\users\thiago\downloads\pi3_labirinto-rafael\main.cpp
+=======
+1585752418 source:c:\users\rafae\desktop\aleatorio\pi3_labirinto\main.cpp
+>>>>>>> 55267baa0141b964bc928e81f2648c1f3f1a3651
 	<iostream>
 	<windows.h>
 	<conio.h>
