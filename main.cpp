@@ -15,66 +15,69 @@ struct matrizGame
 };
 const int tm1 = 21, tm2 = 26, tm3 = 31, tm4 = 36, tm5 = 41, tmax = tm5;
 
-int posicaoI = 0, posicaoJ = 0;
-
-matrizGame matriz5[tmax][tmax];
-matrizGame matriz4[tmax][tmax];
-matrizGame matriz3[tmax][tmax];
-matrizGame matriz2[tmax][tmax];
-matrizGame matriz1[tmax][tmax];
-matrizGame matriztuto1[tmax][tmax];
+int pI = 0, pJ = 0;
 
 void cabecalho(int tamanho);
 void rodape(int tamanho);
 void bandeira(matrizGame marMax[][tmax],int tamanho);
-void printMatriz(matrizGame matMax[][tmax], int tamanho);
+void printMatriz(matrizGame mtx[][tmax], int tamanho);
 
-void tela5(matrizGame matriz5[][tmax]);
-void tela4(matrizGame matriz4[][tmax]);
-void tela3(matrizGame matriz3[][tmax]);
-void tela2(matrizGame matriz2[][tmax]);
-void tela1(matrizGame matriz1[][tmax]);
-void tuto1(matrizGame matriztuto1[][tmax]);
+void tela5(matrizGame mtx[][tmax], int pI, int pJ);
+void tela4(matrizGame mtx[][tmax], int pI, int pJ);
+void tela3(matrizGame mtx[][tmax], int pI, int pJ);
+void tela2(matrizGame mtx[][tmax], int pI, int pJ);
+void tela1(matrizGame mtx[][tmax], int pI, int pJ);
+void tuto1(matrizGame mtx[][tmax], int pI, int pJ);
 
 void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGame mtx[][tmax]);
-void selectMatriz(int matriz);
-void movimento(matrizGame mtx[][tmax]);
+void selectMatriz(matrizGame mtx[tmax][tmax], int matriz, int pI, int pJ);
+void movimento(matrizGame mtx[][tmax], int nMatriz);
 
 int main()
 {
     /*keybd_event(VK_MENU,0x36,0,0);
     keybd_event(VK_RETURN,0x1C,0,0);
     keybd_event(VK_RETURN,0x1C,KEYEVENTF_KEYUP,0);
-    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
+    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);*/
+    matrizGame mtx[tmax][tmax];
 
-    cout << "\n\n\n\t\tBem vindo ao Game do Labirinto.\n\n";
+    /*cout << "\n\n\n\t\tBem vindo ao Game do Labirinto.\n\n";
+    system("pause");
+    system("cls");
+    cout << "\n\n\t\tVoce ira aprender como caminhar pelo nosso labirinto.\n\n";
+    cout << "Voce deve usar as teclas W;A;S e D \npara se locomover respectivmente para cima,\nesquerda, baixo e direita.\n\n";
+    cout << "Seu objetivo sera digitar uma sequencia de \nteclas que ajude o boneco a chegar ao centro do Labirinto.\n\n";
+    cout << "Voce deve lembrar o boneco se locomove \nde ponto a ponto, so basta 1 comando \npara que ele chegue ate o proximo ponto.\nApos terminar de digitar a sequencia\nde movimentos desejada aperte enter para prosseguir.\n\n";
     system("pause");
     system("cls");*/
-    int resposta = 6;
-    selectMatriz(resposta);
+
+    int resposta = 5;
+    pI = 40;
+    pJ = 21;
+    selectMatriz(mtx, resposta, pI, pJ);
 
 
     do
     {
         switch(resposta){
         case 1:
-            movimento(matriz1);
+            movimento(mtx,1);
             break;
         case 2:
-            movimento(matriz2);
+            movimento(mtx,2);
             break;
         case 3:
-            movimento(matriz3);
+            movimento(mtx,3);
             break;
         case 4:
-            movimento(matriz4);
+            movimento(mtx,4);
 
             break;
         case 5:
-            movimento(matriz5);
+            movimento(mtx,5);
             break;
         case 6:
-            movimento(matriztuto1);
+            movimento(mtx,6);
             break;
         }
     }
@@ -104,25 +107,25 @@ void rodape(int tamanho)
     }
 }
 
-void bandeira(matrizGame matMax[][tmax], int tamanho)
+void bandeira(matrizGame mtx[][tmax], int tamanho)
 {
     for(int linha = 0; linha < tamanho; linha++)
     {
         for(int coluna = 0; coluna < tamanho; coluna++)
         {
-            if ((matMax[linha][coluna].caractere == ' ') && ((matMax[linha][coluna+1].caractere == ' ' &&
-                    (matMax[linha-1][coluna].caractere == ' ' || matMax[linha+1][coluna].caractere == ' ')) ||
-                    (matMax[linha][coluna-1].caractere == ' ' && (matMax[linha-1][coluna].caractere == ' ' ||
-                            matMax[linha+1][coluna].caractere == ' '))))
+            if ((mtx[linha][coluna].caractere == ' ') && ((mtx[linha][coluna+1].caractere == ' ' &&
+                    (mtx[linha-1][coluna].caractere == ' ' || mtx[linha+1][coluna].caractere == ' ')) ||
+                    (mtx[linha][coluna-1].caractere == ' ' && (mtx[linha-1][coluna].caractere == ' ' ||
+                            mtx[linha+1][coluna].caractere == ' '))))
             {
-                matMax[linha][coluna].caractere = 220;
-                matMax[linha][coluna].indice = 3;
+                mtx[linha][coluna].caractere = 220;
+                mtx[linha][coluna].indice = 3;
             }
         }
     }
 }
 
-void printMatriz(matrizGame matMax[][tmax], int tamanho)
+void printMatriz(matrizGame mtx[][tmax], int tamanho)
 {
     cabecalho(tamanho);
     for(int linha = 0; linha < tamanho; linha++)
@@ -133,7 +136,7 @@ void printMatriz(matrizGame matMax[][tmax], int tamanho)
             cout << " ";
         for(int coluna = 0; coluna < tamanho; coluna++)
         {
-            cout << matMax[linha][coluna].caractere;
+            cout << mtx[linha][coluna].caractere;
             cout << " ";
         }
         cout << "_" << linha;
@@ -145,43 +148,43 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGa
 {
     if(subir == true)
     {
-        while((mtx[posicaoI][posicaoJ].indice != 3)){
-            if((mtx[posicaoI-1][posicaoJ].indice == 1)){
+        while((mtx[pI][pJ].indice != 3)){
+            if((mtx[pI-1][pJ].indice == 1)){
                 break;
             }
-            posicaoI--;
+            pI--;
         }
     }
     else if(descer == true)
     {
-        while((mtx[posicaoI][posicaoJ].indice != 3)){
-            if((mtx[posicaoI+1][posicaoJ].indice == 1)){
+        while((mtx[pI][pJ].indice != 3)){
+            if((mtx[pI+1][pJ].indice == 1)){
                 break;
             }
-            posicaoI++;
+            pI++;
         }
     }
     else if(direita == true)
     {
-        while((mtx[posicaoI][posicaoJ].indice != 3)){
-            if((mtx[posicaoI][posicaoJ+1].indice == 1)){
+        while((mtx[pI][pJ].indice != 3)){
+            if((mtx[pI][pJ+1].indice == 1)){
                 break;
             }
-            posicaoJ++;
+            pJ++;
         }
     }
     else if(esquerda == true)
     {
-        while((mtx[posicaoI][posicaoJ].indice != 3)){
-            if((mtx[posicaoI][posicaoJ-1].indice == 1)){
+        while((mtx[pI][pJ].indice != 3)){
+            if((mtx[pI][pJ-1].indice == 1)){
                 break;
             }
-            posicaoJ--;
+            pJ--;
         }
     }
 }
 
-void tela5(matrizGame matriz5[][tmax])
+void tela5(matrizGame mtx[][tmax], int pI, int pJ)
 {
 
     for(int linha = 0; linha < tm5; linha++)
@@ -199,8 +202,8 @@ void tela5(matrizGame matriz5[][tmax])
                     (linha == 5 && coluna > 11 && coluna < 22))
             {
 
-                matriz5[linha][coluna].caractere = ' ';
-                matriz5[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
 
             //rotas alternativas
@@ -219,25 +222,25 @@ void tela5(matrizGame matriz5[][tmax])
                     (coluna == 3 && linha < 21 && linha > 10) || (linha == 27 && coluna > 11 && coluna < 20) || (linha == 19 && coluna > 11 && coluna < 25) ||
                     (linha == 23 && coluna > 14 && coluna < 25) || (coluna == 12 && linha < 27 && linha > 19) || (coluna == 24 && linha < 23 && linha > 19) )
             {
-                matriz5[linha][coluna].caractere = ' ';
-                matriz5[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else
             {
-                matriz5[linha][coluna].caractere = 'X';
-                matriz5[linha][coluna].indice = 1;
+                mtx[linha][coluna].caractere = 'X';
+                mtx[linha][coluna].indice = 1;
             }
         }
     }
 
-    matriz5[posicaoI][posicaoJ].caractere = 206;
-    matriz5[posicaoI][posicaoJ].indice = 2;
-    bandeira(matriz5,tm5);
-    printMatriz(matriz5,tm5);
-    Sleep(1000);
+    mtx[pI][pJ].caractere = 206;
+    mtx[pI][pJ].indice = 2;
+    mtx[0][21].caractere = 178; //saida
+    mtx[0][21].indice = 4;      //saida
+    bandeira(mtx,tm5);
 }
 
-void tela4(matrizGame matriz4[][tmax])
+void tela4(matrizGame mtx[][tmax], int pI, int pJ)
 {
     for(int linha = 0; linha < tm4; linha++)
     {
@@ -245,28 +248,27 @@ void tela4(matrizGame matriz4[][tmax])
         {
             if (1==0)
             {
-                matriz4[linha][coluna].caractere = ' ';
-                matriz4[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
-                matriz4[linha][coluna].caractere = ' ';
-                matriz4[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else
             {
-                matriz4[linha][coluna].caractere = 'X';
-                matriz4[linha][coluna].indice = 1;
+                mtx[linha][coluna].caractere = 'X';
+                mtx[linha][coluna].indice = 1;
             }
         }
     }
-    matriz5[posicaoI][posicaoJ].caractere = 206;
-    matriz5[posicaoI][posicaoJ].indice = 2;
-    bandeira(matriz4,tm4);
-    printMatriz(matriz4,tm4);
+    mtx[pI][pJ].caractere = 206;
+    mtx[pI][pJ].indice = 2;
+    bandeira(mtx,tm4);
 }
 
-void tela3(matrizGame matriz3[][tmax])
+void tela3(matrizGame mtx[][tmax], int pI, int pJ)
 {
     for(int linha = 0; linha < tm3; linha++)
     {
@@ -274,28 +276,27 @@ void tela3(matrizGame matriz3[][tmax])
         {
             if (1==0)
             {
-                matriz3[linha][coluna].caractere = ' ';
-                matriz3[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
-                matriz3[linha][coluna].caractere = ' ';
-                matriz3[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else
             {
-                matriz3[linha][coluna].caractere = 'X';
-                matriz3[linha][coluna].indice = 1;
+                mtx[linha][coluna].caractere = 'X';
+                mtx[linha][coluna].indice = 1;
             }
         }
     }
-    matriz5[posicaoI][posicaoJ].caractere = 206;
-    matriz5[posicaoI][posicaoJ].indice = 2;
-    bandeira(matriz4,tm4);
-    printMatriz(matriz3,tm3);
+    mtx[pI][pJ].caractere = 206;
+    mtx[pI][pJ].indice = 2;
+    bandeira(mtx,tm3);
 }
 
-void tela2(matrizGame matriz2[][tmax])
+void tela2(matrizGame mtx[][tmax], int pI, int pJ)
 {
     for(int linha = 0; linha < tm2; linha++)
     {
@@ -303,28 +304,27 @@ void tela2(matrizGame matriz2[][tmax])
         {
             if (1==0)
             {
-                matriz2[linha][coluna].caractere = ' ';
-                matriz2[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
-                matriz2[linha][coluna].caractere = ' ';
-                matriz2[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else
             {
-                matriz2[linha][coluna].caractere = 'X';
-                matriz2[linha][coluna].indice = 1;
+                mtx[linha][coluna].caractere = 'X';
+                mtx[linha][coluna].indice = 1;
             }
         }
     }
-    matriz5[posicaoI][posicaoJ].caractere = 206;
-    matriz5[posicaoI][posicaoJ].indice = 2;
-    bandeira(matriz4,tm4);
-    printMatriz(matriz2,tm2);
+    mtx[pI][pJ].caractere = 206;
+    mtx[pI][pJ].indice = 2;
+    bandeira(mtx,tm2);
 }
 
-void tela1(matrizGame matriz1[][tmax])
+void tela1(matrizGame mtx[][tmax], int pI, int pJ)
 {
     for(int linha = 0; linha < tm1; linha++)
     {
@@ -332,28 +332,27 @@ void tela1(matrizGame matriz1[][tmax])
         {
             if (1==0)
             {
-                matriz1[linha][coluna].caractere = ' ';
-                matriz1[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else if (1==0)
             {
-                matriz1[linha][coluna].caractere = ' ';
-                matriz1[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else
             {
-                matriz1[linha][coluna].caractere = 'X';
-                matriz1[linha][coluna].indice = 1;
+                mtx[linha][coluna].caractere = 'X';
+                mtx[linha][coluna].indice = 1;
             }
         }
     }
-    matriz5[posicaoI][posicaoJ].caractere = 206;
-    matriz5[posicaoI][posicaoJ].indice = 2;
-    bandeira(matriz4,tm4);
-    printMatriz(matriz1,tm1);
+    mtx[pI][pJ].caractere = 206;
+    mtx[pI][pJ].indice = 2;
+    bandeira(mtx,tm1);
 }
 
-void tuto1(matrizGame matriztuto1[][tmax])
+void tuto1(matrizGame mtx[][tmax], int pI, int pJ)
 {
     for(int linha = 0; linha < tm1; linha++)
     {
@@ -364,70 +363,56 @@ void tuto1(matrizGame matriztuto1[][tmax])
                 (coluna == 5 && linha > 4 && linha < 14) || (linha == 5 && coluna > 5 && coluna < 16) || (coluna == 15 && linha > 5 && linha < 11) ||
                 ( linha == 10 && coluna > 9 && coluna < 15))
             {
-                matriztuto1[linha][coluna].caractere = ' ';
-                matriztuto1[linha][coluna].indice = 0;
+                mtx[linha][coluna].caractere = ' ';
+                mtx[linha][coluna].indice = 0;
             }
             else
             {
-                matriztuto1[linha][coluna].caractere = 'X';
-                matriztuto1[linha][coluna].indice = 1;
+                mtx[linha][coluna].caractere = 'X';
+                mtx[linha][coluna].indice = 1;
             }
         }
     }
-    matriztuto1[posicaoI][posicaoJ].caractere = 206;
-    matriztuto1[posicaoI][posicaoJ].indice = 2;
-    matriztuto1[10][10].caractere = 178; //saida
-    matriztuto1[10][10].indice = 4;      //saida
+    mtx[pI][pJ].caractere = 206;
+    mtx[pI][pJ].indice = 2;
+    mtx[10][10].caractere = 178; //saida
+    mtx[10][10].indice = 4;      //saida
 
-    bandeira(matriztuto1,tm1);
-    printMatriz(matriztuto1,tm1);
-
+    bandeira(mtx,tm1);
 }
 
-void selectMatriz(int matriz)
+void selectMatriz(matrizGame mtx[][tmax], int matriz, int pI, int pJ)
 {
 
     switch(matriz)
     {
     case 1:
-        posicaoI = 20;
-        posicaoJ = 11;
-        tela1(matriz1);
+        tela1(mtx, pI, pJ);
+        printMatriz(mtx,tm1);
         break;
     case 2:
-        posicaoI = 25;
-        posicaoJ = 13;
-        tela2(matriz2);
+        tela2(mtx, pI, pJ);
+        printMatriz(mtx,tm2);
         break;
     case 3:
-        posicaoI = 30;
-        posicaoJ = 16;
-        tela3(matriz3);
+        tela3(mtx, pI, pJ);
+        printMatriz(mtx,tm3);
         break;
     case 4:
-        posicaoI = 35;
-        posicaoJ = 18;
-        tela4(matriz4);
+        tela4(mtx, pI, pJ);
+        printMatriz(mtx,tm4);
         break;
     case 5:
-        posicaoI = 40;
-        posicaoJ = 21;
-        tela5(matriz5);
+        tela5(mtx, pI, pJ);
+        printMatriz(mtx,tm5);
+        break;
     case 6:
-        posicaoI = 20;
-        posicaoJ = 10;
-        cout << "\n\n\t\tVoce ira aprender como caminhar pelo nosso labirinto.\n\n";
-        cout << "Voce deve usar as teclas W;A;S e D \npara se locomover respectivmente para cima,\nesquerda, baixo e direita.\n\n";
-        cout << "Seu objetivo sera digitar uma sequencia de \nteclas que ajude o boneco a chegar ao centro do Labirinto.\n\n";
-        cout << "Voce deve lembrar o boneco se locomove \nde ponto a ponto, so basta 1 comando \npara que ele chegue ate o proximo ponto.\nApos terminar de digitar a sequencia\nde movimentos desejada aperte enter para prosseguir.\n\n";
-        system("pause");
-        system("cls");
-        tuto1(matriztuto1);
-
+        tuto1(mtx, pI, pJ);
+        printMatriz(mtx,tm1);
     }
 }
 
-void movimento(matrizGame mtx[][tmax])
+void movimento(matrizGame mtx[][tmax], int nMatriz)
 {
     char direcao[40];
 
@@ -441,31 +426,31 @@ void movimento(matrizGame mtx[][tmax])
         {
             system("CLS");
             alteraPosicao(1,0,0,0, mtx);
-            tuto1(mtx);
+            selectMatriz(mtx, nMatriz,pI, pJ);
         }
         else if (direcao[i] == 100)  //para direita
         {
             system("CLS");
             alteraPosicao(0,0,1,0, mtx);
-            tuto1(mtx);
+            selectMatriz(mtx, nMatriz,pI, pJ);
         }
         else if (direcao[i] == 115) //para baixo
         {
             system("CLS");
             alteraPosicao(0,1,0,0, mtx);
-            tuto1(mtx);
+            selectMatriz(mtx, nMatriz,pI, pJ);
         }
         else if (direcao[i] == 97)   //para esqueda
         {
             system("CLS");
             alteraPosicao(0,0,0,1, mtx);
-            tuto1(mtx);
+            selectMatriz(mtx, nMatriz,pI, pJ);
         }
         else
         {
             system("CLS");
             alteraPosicao(0,0,0,0, mtx);
-            tuto1(mtx);
+            selectMatriz(mtx, nMatriz,pI, pJ);
         }
     }
 }
