@@ -28,3 +28,12 @@
 	<string.h>
 	<locale.h>
 
+1586179446 source:c:\users\thiago\desktop\codeblocks\pi3_labirinto\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<locale.h>
+
