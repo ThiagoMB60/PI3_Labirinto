@@ -37,6 +37,7 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGa
 void selectMatriz(matrizGame mtx[tmax][tmax], int matriz, int pI, int pJ);
 void selectMovimento(matrizGame mtx[tmax][tmax], int matriz);
 void movimento(matrizGame mtx[][tmax], int nMatriz);
+void roteiro(matrizGame mtx[][tmax]);
 
 int main()
 {
@@ -56,36 +57,8 @@ int main()
     system("pause");
     system("cls");*/
 
-    int matriz = 6;
-    pI = 20;
-    pJ = 10;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    matriz = 1;
-    pI = 20;
-    pJ = 10;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    matriz = 2;
-    pI = 25;
-    pJ = 15;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    matriz = 3;
-    pI = 30;
-    pJ = 20;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    matriz = 4;
-    pI = 35;
-    pJ = 25;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    matriz = 5;
-    pI = 40;
-    pJ = 20;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
+    roteiro(mtx);
+
 
 
 
@@ -191,10 +164,6 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGa
             }
             pJ--;
         }
-    }
-    if (mtx[pI][pJ].indice == iSaida)
-    {
-        next = true;
     }
 }
 
@@ -404,32 +373,32 @@ void selectMatriz(matrizGame mtx[][tmax], int matriz, int pI, int pJ)
     case 1:
         tela1(mtx, pI, pJ);
         printMatriz(mtx,tm1);
-        Sleep(500);
         break;
     case 2:
         tela2(mtx, pI, pJ);
         printMatriz(mtx,tm2);
-        Sleep(500);
         break;
     case 3:
         tela3(mtx, pI, pJ);
         printMatriz(mtx,tm3);
-        Sleep(500);
         break;
     case 4:
         tela4(mtx, pI, pJ);
         printMatriz(mtx,tm4);
-        Sleep(500);
         break;
     case 5:
         tela5(mtx, pI, pJ);
         printMatriz(mtx,tm5);
-        Sleep(500);
         break;
     case 6:
         tuto1(mtx, pI, pJ);
         printMatriz(mtx,tm1);
-        Sleep(500);
+
+    }
+    Sleep(500);
+    if (mtx[10][10].indice == iBoneco)
+    {
+        next = true;
     }
 }
 
@@ -457,12 +426,17 @@ void selectMovimento(matrizGame mtx[][tmax], int matriz)
             movimento(mtx,6);
             break;
         }
+        if (next){
+            next = false;
+            return;
+        }
     }
     while(matriz != -1);
 }
 
 void movimento(matrizGame mtx[][tmax], int nMatriz)
 {
+
     char direcao[40];
 
     cout << "\n\nPara qual direcao deseja ir? ";
@@ -502,4 +476,49 @@ void movimento(matrizGame mtx[][tmax], int nMatriz)
             selectMatriz(mtx, nMatriz,pI, pJ);
         }
     }
+}
+
+void roteiro(matrizGame mtx[][tmax]){
+    int matriz = 6;
+    pI = 20;
+    pJ = 10;
+    selectMatriz(mtx, matriz, pI, pJ);
+    selectMovimento(mtx, matriz);
+    cout << "\n\n";
+    system("pause");
+    matriz = 1;
+    pI = 20;
+    pJ = 10;
+    selectMatriz(mtx, matriz, pI, pJ);
+    selectMovimento(mtx, matriz);
+    cout << "\n\n";
+    system("pause");
+    matriz = 2;
+    pI = 25;
+    pJ = 15;
+    selectMatriz(mtx, matriz, pI, pJ);
+    selectMovimento(mtx, matriz);
+    cout << "\n\n";
+    system("pause");
+    matriz = 3;
+    pI = 30;
+    pJ = 20;
+    selectMatriz(mtx, matriz, pI, pJ);
+    selectMovimento(mtx, matriz);
+    cout << "\n\n";
+    system("pause");
+    matriz = 4;
+    pI = 35;
+    pJ = 25;
+    selectMatriz(mtx, matriz, pI, pJ);
+    selectMovimento(mtx, matriz);
+    cout << "\n\n";
+    system("pause");
+    matriz = 5;
+    pI = 40;
+    pJ = 20;
+    selectMatriz(mtx, matriz, pI, pJ);
+    selectMovimento(mtx, matriz);
+    cout << "\n\n";
+    system("pause");
 }
