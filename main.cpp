@@ -10,14 +10,13 @@ using namespace std;
 
 struct matrizGame
 {
-    char caractere;  //0 = ' '; 1 = 'X'; 2  = 206; 3 = 220;
-    int indice;
+    char caractere;
+    int indice;  //0 = ' '; 1 = 'X'; 2  = 206; 3 = 220; 4 = 178
 };
 const int tm1 = 21, tm2 = 26, tm3 = 31, tm4 = 36, tm5 = 41, tmax = tm5;
 
-int posLinha;
-int posColuna;
 int posicaoI = 0, posicaoJ = 0;
+
 matrizGame matriz5[tmax][tmax];
 matrizGame matriz4[tmax][tmax];
 matrizGame matriz3[tmax][tmax];
@@ -37,23 +36,47 @@ void tela2(matrizGame matriz2[][tmax]);
 void tela1(matrizGame matriz1[][tmax]);
 void tuto1(matrizGame matriztuto1[][tmax]);
 
-void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda);
+void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGame mtx[][tmax]);
 void selectMatriz(int matriz);
-void movimento();
+void movimento(matrizGame mtx[][tmax]);
 
 int main()
 {
     /*keybd_event(VK_MENU,0x36,0,0);
     keybd_event(VK_RETURN,0x1C,0,0);
     keybd_event(VK_RETURN,0x1C,KEYEVENTF_KEYUP,0);
-    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);*/
+    keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
 
-    int resposta = 5;
+    cout << "\n\n\n\t\tBem vindo ao Game do Labirinto.\n\n";
+    system("pause");
+    system("cls");*/
+    int resposta = 6;
     selectMatriz(resposta);
+
 
     do
     {
-        movimento();
+        switch(resposta){
+        case 1:
+            movimento(matriz1);
+            break;
+        case 2:
+            movimento(matriz2);
+            break;
+        case 3:
+            movimento(matriz3);
+            break;
+        case 4:
+            movimento(matriz4);
+
+            break;
+        case 5:
+            movimento(matriz5);
+            break;
+        case 6:
+            movimento(matriztuto1);
+            break;
+        }
     }
     while(resposta !=0);
 }
@@ -118,12 +141,12 @@ void printMatriz(matrizGame matMax[][tmax], int tamanho)
     rodape(tamanho);
 }
 
-void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
+void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGame mtx[][tmax])
 {
     if(subir == true)
     {
-        while((matriz5[posicaoI][posicaoJ].indice != 3)){
-            if((matriz5[posicaoI-1][posicaoJ].indice == 1)){
+        while((mtx[posicaoI][posicaoJ].indice != 3)){
+            if((mtx[posicaoI-1][posicaoJ].indice == 1)){
                 break;
             }
             posicaoI--;
@@ -131,8 +154,8 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
     }
     else if(descer == true)
     {
-        while((matriz5[posicaoI][posicaoJ].indice != 3)){
-            if((matriz5[posicaoI+1][posicaoJ].indice == 1)){
+        while((mtx[posicaoI][posicaoJ].indice != 3)){
+            if((mtx[posicaoI+1][posicaoJ].indice == 1)){
                 break;
             }
             posicaoI++;
@@ -140,8 +163,8 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
     }
     else if(direita == true)
     {
-        while((matriz5[posicaoI][posicaoJ].indice != 3)){
-            if((matriz5[posicaoI][posicaoJ+1].indice == 1)){
+        while((mtx[posicaoI][posicaoJ].indice != 3)){
+            if((mtx[posicaoI][posicaoJ+1].indice == 1)){
                 break;
             }
             posicaoJ++;
@@ -149,8 +172,8 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda)
     }
     else if(esquerda == true)
     {
-        while((matriz5[posicaoI][posicaoJ].indice != 3)){
-            if((matriz5[posicaoI][posicaoJ-1].indice == 1)){
+        while((mtx[posicaoI][posicaoJ].indice != 3)){
+            if((mtx[posicaoI][posicaoJ-1].indice == 1)){
                 break;
             }
             posicaoJ--;
@@ -330,17 +353,16 @@ void tela1(matrizGame matriz1[][tmax])
     printMatriz(matriz1,tm1);
 }
 
-void tuto1(matrizGame matriztuto1[][tmax]){
+void tuto1(matrizGame matriztuto1[][tmax])
+{
     for(int linha = 0; linha < tm1; linha++)
     {
         for(int coluna = 0; coluna < tm1; coluna++)
         {
-            if (1==0)
-            {
-                matriztuto1[linha][coluna].caractere = ' ';
-                matriztuto1[linha][coluna].indice = 0;
-            }
-            else if (1==0)
+            if ((linha > 17 && coluna == 10) || (linha == 18 && coluna > 0 && coluna < 10) || (coluna == 1 && linha > 0 && linha < 18) ||
+                (linha == 1 && coluna > 0 && coluna < 20) || (coluna == 19 && linha > 0 && linha < 15) || (linha == 14 && coluna < 19 && coluna > 4) ||
+                (coluna == 5 && linha > 4 && linha < 14) || (linha == 5 && coluna > 5 && coluna < 16) || (coluna == 15 && linha > 5 && linha < 11) ||
+                ( linha == 10 && coluna > 9 && coluna < 15))
             {
                 matriztuto1[linha][coluna].caractere = ' ';
                 matriztuto1[linha][coluna].indice = 0;
@@ -352,12 +374,16 @@ void tuto1(matrizGame matriztuto1[][tmax]){
             }
         }
     }
-    matriz5[posicaoI][posicaoJ].caractere = 206;
-    matriz5[posicaoI][posicaoJ].indice = 2;
+    matriztuto1[posicaoI][posicaoJ].caractere = 206;
+    matriztuto1[posicaoI][posicaoJ].indice = 2;
+    matriztuto1[10][10].caractere = 178; //saida
+    matriztuto1[10][10].indice = 4;      //saida
+
     bandeira(matriztuto1,tm1);
     printMatriz(matriztuto1,tm1);
 
 }
+
 void selectMatriz(int matriz)
 {
 
@@ -387,10 +413,21 @@ void selectMatriz(int matriz)
         posicaoI = 40;
         posicaoJ = 21;
         tela5(matriz5);
+    case 6:
+        posicaoI = 20;
+        posicaoJ = 10;
+        cout << "\n\n\t\tVoce ira aprender como caminhar pelo nosso labirinto.\n\n";
+        cout << "Voce deve usar as teclas W;A;S e D \npara se locomover respectivmente para cima,\nesquerda, baixo e direita.\n\n";
+        cout << "Seu objetivo sera digitar uma sequencia de \nteclas que ajude o boneco a chegar ao centro do Labirinto.\n\n";
+        cout << "Voce deve lembrar o boneco se locomove \nde ponto a ponto, so basta 1 comando \npara que ele chegue ate o proximo ponto.\nApos terminar de digitar a sequencia\nde movimentos desejada aperte enter para prosseguir.\n\n";
+        system("pause");
+        system("cls");
+        tuto1(matriztuto1);
+
     }
 }
 
-void movimento()
+void movimento(matrizGame mtx[][tmax])
 {
     char direcao[40];
 
@@ -403,32 +440,32 @@ void movimento()
         if (direcao[i] == 119)      //para cima
         {
             system("CLS");
-            alteraPosicao(1,0,0,0);
-            tela5(matriz5);
+            alteraPosicao(1,0,0,0, mtx);
+            tuto1(mtx);
         }
         else if (direcao[i] == 100)  //para direita
         {
             system("CLS");
-            alteraPosicao(0,0,1,0);
-            tela5(matriz5);
+            alteraPosicao(0,0,1,0, mtx);
+            tuto1(mtx);
         }
         else if (direcao[i] == 115) //para baixo
         {
             system("CLS");
-            alteraPosicao(0,1,0,0);
-            tela5(matriz5);
+            alteraPosicao(0,1,0,0, mtx);
+            tuto1(mtx);
         }
         else if (direcao[i] == 97)   //para esqueda
         {
             system("CLS");
-            alteraPosicao(0,0,0,1);
-            tela5(matriz5);
+            alteraPosicao(0,0,0,1, mtx);
+            tuto1(mtx);
         }
         else
         {
             system("CLS");
-            alteraPosicao(0,0,0,0);
-            tela5(matriz5);
+            alteraPosicao(0,0,0,0, mtx);
+            tuto1(mtx);
         }
     }
 }
