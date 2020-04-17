@@ -262,7 +262,20 @@ void tela3(matrizGame mtx[][tmax], int pI, int pJ)
     {
         for(int coluna = 0; coluna < tm3; coluna++)
         {
-            if (1==0)
+            if (      (coluna >= 0 && coluna <= 7 && linha == 3   )||(coluna == 7 && linha >= 3 && linha <= 8     )||(coluna <= 7 && coluna >= 2 && linha == 8   )
+                    ||(coluna == 2 && linha >= 6 && linha <= 8    )||(coluna == 7 && linha >= 8 && linha <= 15    )||(coluna >= 2 && coluna <= 7 && linha == 15  )
+                    ||(coluna == 2 && linha >= 15 && linha <= 28  )||(linha == 28 && coluna >= 2 && coluna <= 13  )||(coluna == 13 && linha >= 18 && linha <= 28 )
+                    ||(linha == 18 && coluna >= 4 && coluna <= 12 )||(coluna == 4 && linha >= 18 && linha <= 25   )||(linha == 25 && coluna >= 4 && coluna <= 10 )
+                    ||(coluna == 10 && linha >= 21 && linha <= 25 )||(linha == 21 && coluna >= 10 && coluna <= 26 )||(coluna == 7 && linha >= 21 && linha <= 23  )
+                    ||(linha == 23 && coluna >= 7 && coluna <= 8  )||(linha == 21 && coluna >= 7 && coluna <= 10  )||(linha == 3 && coluna >= 7 && coluna <= 28  )
+                    ||(coluna == 28 && linha >= 3 && linha <= 5   )||(linha == 5 && coluna >= 11 && coluna <= 28  )||(coluna == 11 && linha >= 5 && linha <= 9   )
+                    ||(linha == 9 && coluna >= 11 && coluna <= 30 )||(linha == 12 && coluna >= 11 && coluna <= 27 )||(coluna == 11 && linha >= 9 && linha <= 12  )
+                    ||(coluna == 27 && linha >= 12 && linha <= 15 )||(linha == 15 && coluna >= 15 && coluna <= 27 )||(coluna == 15 && linha >= 15 && linha <= 20 )
+                    ||(coluna == 26 && linha >= 21 && linha <= 24 )||(linha == 24 && coluna >= 17 && coluna <= 26 )||(coluna == 11 && linha >= 10 && linha <= 15 )
+                    ||(linha == 15 && coluna >= 9 && coluna <= 11 )||(coluna == 9 && linha >= 13 && linha <=15    )||(coluna == 20 && linha >= 16 && linha <=18  )
+                    ||(linha == 18 && coluna >= 20 && coluna <= 26)||(coluna == 17 && linha >=25 && linha <= 30   )
+
+                  )
             {
                 mtx[linha][coluna].caractere = cEspaco;
                 mtx[linha][coluna].indice = iEspaco;
@@ -281,10 +294,15 @@ void tela3(matrizGame mtx[][tmax], int pI, int pJ)
     }
     mtx[pI][pJ].caractere = cBoneco;
     mtx[pI][pJ].indice = iBoneco;
-    if (mtx[0][0].indice != iBoneco)  //coloca o boneco no centro da matriz
+    if (mtx[9][30].indice != iBoneco)  //coloca o boneco no centro da matriz
     {
-        mtx[0][0].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
-        mtx[0][0].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
+        mtx[9][30].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
+        mtx[9][30].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
+    }
+    if (mtx[30][17].indice != iBoneco)  //coloca o boneco no centro da matriz
+    {
+        mtx[30][17].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
+        mtx[30][17].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
     }
     bandeira(mtx,tm3);
 }
@@ -443,13 +461,13 @@ bool testeSaida(matrizGame mtx [][tmax], int matriz)
         }
         break;
     case 2:
-        if (mtx[0][0].indice == iBoneco)// POSIÇAO DE SAIDA
+        if (mtx[0][0].indice == iBoneco) // POSIÇAO DE SAIDA
         {
             return true;
         }
         break;
     case 3:
-        if (mtx[0][0].indice == iBoneco)// POSIÇAO DE SAIDA
+        if (mtx[9][30].indice == iBoneco || mtx[30][17].indice == iBoneco) // POSIÇAO DE SAIDA
         {
             return true;
         }
@@ -461,13 +479,13 @@ bool testeSaida(matrizGame mtx [][tmax], int matriz)
         }
         break;
     case 5:
-        if (mtx[0][21].indice == iBoneco)
+        if (mtx[0][21].indice == iBoneco) // POSIÇAO DE SAIDA
         {
             return true;
         }
         break;
     case 6:
-        if (mtx[10][10].indice == iBoneco)
+        if (mtx[10][10].indice == iBoneco) // POSIÇAO DE SAIDA
         {
             return true;
         }
@@ -478,12 +496,13 @@ bool testeSaida(matrizGame mtx [][tmax], int matriz)
 
 void selectMovimento(matrizGame mtx[][tmax], int matriz)
 {
+
     do
     {
         switch(matriz)
         {
         case 1:
-            movimento(mtx,1);
+           movimento(mtx,1);
             break;
         case 2:
             movimento(mtx,2);
@@ -574,16 +593,16 @@ void roteiro(matrizGame mtx[][tmax])
     system("CLS");
     //fim
     matriz = 2;
-    pI = 25;
-    pJ = 15;
+    pI = 0;
+    pJ = 0;
     selectMatriz(mtx, matriz, pI, pJ);
     selectMovimento(mtx, matriz);
     cout << "\n\n";
     system("pause");
     system("CLS");
     matriz = 3;
-    pI = 30;
-    pJ = 20;
+    pI = 3;
+    pJ = 0;
     selectMatriz(mtx, matriz, pI, pJ);
     selectMovimento(mtx, matriz);
     cout << "\n\n";
@@ -680,5 +699,6 @@ bool iniciarJogo()
             iniciarJogo();
         }
     }
+    return 0;
 }
 
