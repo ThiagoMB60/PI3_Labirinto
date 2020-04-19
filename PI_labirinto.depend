@@ -19,7 +19,16 @@
 	<string.h>
 	<locale.h>
 
-1587086990 source:c:\users\rafae\desktop\pi3_labirinto\main.cpp
+1587256276 source:c:\users\rafae\desktop\pi3_labirinto\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<locale.h>
+
+1587251872 source:c:\users\vitoria\desktop\pi3_labirinto\main.cpp
 	<iostream>
 	<windows.h>
 	<conio.h>
