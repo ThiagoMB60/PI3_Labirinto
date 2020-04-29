@@ -869,5 +869,5 @@ bool iniciarJogo()
         }
     }
     return 0;
-}
+    int teste;
 
