@@ -14,9 +14,15 @@ struct matrizGame
     int indice;
 };
 const int tm1 = 21, tm2 = 26, tm3 = 31, tm4 = 36, tm5 = 41, tmax = tm5; //tamanho da matriz
-const int cEspaco = 32, cXis = 88, cBoneco = 206, cBandeira = 220, cSaida = 178; //numero referente a tabela ascii referente ao struct
-const int iEspaco = 0, iXis = 1, iBoneco = 2, iBandeira = 3, iSaida = 4; //indici do struct
+const int cEspaco = 32, cParede = 157, cBoneco = 206, cBandeira = 220, cSaida = 178, cPeca = 88	; //numero referente a tabela ascii referente ao struct
+const int iEspaco = 0, iXis = 1, iBoneco = 2, iBandeira = 3, iSaida = 4, iPeca = 5; //indici do struct
 
+int contLibera = 0;//contador responsabel por liberar o lab 5
+int contLocal2 = 0;//contador responsavel pelo lab 2
+int contLocal1 = 0;//contador responsavel pelo lab 1
+int contLocal4 = 0;//contador responsavel pelo lab 4
+
+int matriz;
 int pI = 0, pJ = 0; //PI=linha e PJ=coluna
 
 bool nextMatriz = false; // Passa para proxima fase
@@ -41,6 +47,12 @@ void selectMovimento(matrizGame mtx[tmax][tmax], int matriz); //chamada dentro d
 void movimento(matrizGame mtx[][tmax], int nMatriz);
 void roteiro(matrizGame mtx[][tmax]);
 bool testeSaida(matrizGame mtx [][tmax], int matriz);
+void ajudaTutorial();
+void roteiroTuto(matrizGame mtx[][tmax]);
+void ajuda(matrizGame mtx[][tmax], int pI, int pJ);
+void ajudafixa();
+
+void reiniciaMatriz(matrizGame mtx[][tmax], int nMatriz, int pI, int pJ);
 
 int main()
 {
@@ -141,6 +153,7 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGa
     {
         while((mtx[pI][pJ].indice != iBandeira) && (mtx[pI][pJ].indice != iSaida))
         {
+
             if((mtx[pI][pJ+1].indice == iXis))
             {
                 break;
@@ -163,7 +176,6 @@ void alteraPosicao(bool subir,bool descer, bool direita, bool esquerda, matrizGa
 
 void tela5(matrizGame mtx[][tmax], int pI, int pJ)
 {
-
     for(int linha = 0; linha < tm5; linha++)
     {
         for(int coluna = 0; coluna < tm5; coluna++)
@@ -204,7 +216,7 @@ void tela5(matrizGame mtx[][tmax], int pI, int pJ)
             }
             else
             {
-                mtx[linha][coluna].caractere = cXis;
+                mtx[linha][coluna].caractere = cParede;
                 mtx[linha][coluna].indice = iXis;
             }
         }
@@ -222,11 +234,24 @@ void tela5(matrizGame mtx[][tmax], int pI, int pJ)
 
 void tela4(matrizGame mtx[][tmax], int pI, int pJ)
 {
+    cout << "\n\tCHAVES:"<<contLibera<<"\n";
+    cout << "\n\tPECAS:"<<contLocal4<<"\n";
     for(int linha = 0; linha < tm4; linha++)
     {
         for(int coluna = 0; coluna < tm4; coluna++)
         {
-            if (1==0)
+            if ((linha == 9 && coluna >= 0 && coluna <= 8       )||(coluna == 8 && linha >= 9 && linha <= 16   )||(linha == 16 && coluna >= 8 && coluna <= 16)
+                    ||(coluna == 16 && linha >= 12 && linha <= 16 )||(linha == 12 && coluna >= 16 && coluna <= 27)||(coluna == 27 && linha >= 12 && linha <= 22)
+                    ||(linha == 22 && coluna >= 13 && coluna <= 27)||(coluna == 13 && linha >= 22 && linha <= 30 )||(linha == 30 && coluna >= 13 && coluna<= 31)
+                    ||(coluna == 31 && linha >= 9 && linha <= 30  )||(linha == 9 && coluna >= 32 && coluna <=35) ||(coluna == 13 && linha >= 31 && linha <= 33)
+                    ||(linha == 33 && coluna >= 2 && coluna <= 13 )||(coluna == 2 && linha >= 19 && linha <= 33) || (linha == 19 && coluna >= 2 && coluna <= 10 )
+                    ||(coluna == 27 && linha >= 23 && linha <= 27) || (linha == 27 && coluna >= 17 && coluna <= 26)||(coluna == 17&& linha >= 24 && linha <= 27 )
+                    ||(coluna == 27 && linha >= 5 && linha <= 12) || (linha == 5 && coluna >= 27 && coluna <= 34 ) || (coluna == 34 && linha >= 2 && linha <= 5)
+                    ||(linha == 2 && coluna >= 24 && coluna <= 33) ||(coluna == 24 && linha >= 2 && linha <= 7) || (linha == 7 && coluna >= 20 && coluna <= 24)
+                    ||(coluna == 16 && linha >= 5 && linha <= 11) || (linha == 5 && coluna >= 9 && coluna <= 16 )||(coluna == 9 && linha >= 2 && linha <=5)
+                    ||(coluna == 10 && linha >= 19 && linha <= 27) || (linha == 27 && coluna >= 5 && coluna <= 10)||(coluna == 5 && linha >= 27 && linha <=31)
+                    ||(coluna == 31 && linha >= 30 && linha <= 33) || (linha == 33 && coluna >= 13 && coluna <= 31)||(coluna == 22 && linha >= 13 && linha <= 19)
+                    ||(linha == 19 && coluna >=14 && coluna <= 22))
             {
                 mtx[linha][coluna].caractere = cEspaco;
                 mtx[linha][coluna].indice = iEspaco;
@@ -238,28 +263,57 @@ void tela4(matrizGame mtx[][tmax], int pI, int pJ)
             }
             else
             {
-                mtx[linha][coluna].caractere = cXis;
+                mtx[linha][coluna].caractere = cParede;
                 mtx[linha][coluna].indice = iXis;
+            }
+            if ((linha == 2 && coluna == 9)||(linha == 31 && coluna == 5)||
+                (linha == 24 && coluna == 17)||(linha == 7 && coluna == 20))
+            {
+                mtx[linha][coluna].caractere = cPeca;
+                mtx[linha][coluna].indice = iPeca;
             }
         }
     }
     mtx[pI][pJ].caractere = cBoneco;
     mtx[pI][pJ].indice = iBoneco;
-    if (mtx[0][0].indice != iBoneco)  //coloca o boneco no centro da matriz
+    if (mtx[9][35].indice != iBoneco)  //coloca o boneco no centro da matriz
     {
-        mtx[0][0].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
-        mtx[0][0].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
+        mtx[9][35].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
+        mtx[9][35].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
     }
     bandeira(mtx,tm4);
 }
-
 void tela3(matrizGame mtx[][tmax], int pI, int pJ)
 {
+    int porta1 =0;//iguais
+    int porta2 =0;//diferentes
+
+    int flag1=0;
+    int flag0=0;
+    int flagp1=0;
+    int flagp2=0;
+
+
+
+    cout << "\n\tCHAVES:"<<contLibera<<"\n";
     for(int linha = 0; linha < tm3; linha++)
     {
         for(int coluna = 0; coluna < tm3; coluna++)
         {
-            if (1==0)
+            if (      (coluna >= 0 && coluna <= 7 && linha == 3   )||(coluna == 7 && linha >= 3 && linha <= 8     )||(coluna <= 7 && coluna >= 2 && linha == 8   )
+                      ||(coluna == 2 && linha >= 6 && linha <= 8    )||(coluna == 7 && linha >= 8 && linha <= 15    )||(coluna >= 2 && coluna <= 7 && linha == 15  )
+                      ||(coluna == 2 && linha >= 15 && linha <= 28  )||(linha == 28 && coluna >= 2 && coluna <= 13  )||(coluna == 13 && linha >= 18 && linha <= 28 )
+                      ||(linha == 18 && coluna >= 4 && coluna <= 12 )||(coluna == 4 && linha >= 18 && linha <= 25   )||(linha == 25 && coluna >= 4 && coluna <= 10 )
+                      ||(coluna == 10 && linha >= 21 && linha <= 25 )||(linha == 21 && coluna >= 10 && coluna <= 26 )||(coluna == 7 && linha >= 21 && linha <= 23  )
+                      ||(linha == 23 && coluna >= 7 && coluna <= 8  )||(linha == 21 && coluna >= 7 && coluna <= 10  )||(linha == 3 && coluna >= 7 && coluna <= 28  )
+                      ||(coluna == 28 && linha >= 3 && linha <= 5   )||(linha == 5 && coluna >= 11 && coluna <= 28  )||(coluna == 11 && linha >= 5 && linha <= 9   )
+                      ||(linha == 9 && coluna >= 11 && coluna <= 30 )||(linha == 12 && coluna >= 11 && coluna <= 27 )||(coluna == 11 && linha >= 9 && linha <= 12  )
+                      ||(coluna == 27 && linha >= 12 && linha <= 15 )||(linha == 15 && coluna >= 15 && coluna <= 27 )||(coluna == 15 && linha >= 15 && linha <= 20 )
+                      ||(coluna == 26 && linha >= 21 && linha <= 24 )||(linha == 24 && coluna >= 17 && coluna <= 26 )||(coluna == 11 && linha >= 10 && linha <= 15 )
+                      ||(linha == 15 && coluna >= 9 && coluna <= 11 )||(coluna == 9 && linha >= 13 && linha <=15    )||(coluna == 20 && linha >= 16 && linha <=18  )
+                      ||(linha == 18 && coluna >= 20 && coluna <= 26)||(coluna == 17 && linha >=25 && linha <= 30   )
+
+               )
             {
                 mtx[linha][coluna].caractere = cEspaco;
                 mtx[linha][coluna].indice = iEspaco;
@@ -271,56 +325,153 @@ void tela3(matrizGame mtx[][tmax], int pI, int pJ)
             }
             else
             {
-                mtx[linha][coluna].caractere = cXis;
+                mtx[linha][coluna].caractere = cParede;
                 mtx[linha][coluna].indice = iXis;
             }
         }
     }
     mtx[pI][pJ].caractere = cBoneco;
     mtx[pI][pJ].indice = iBoneco;
-    if (mtx[0][0].indice != iBoneco)  //coloca o boneco no centro da matriz
+    if (mtx[9][30].indice != iBoneco)  //coloca o boneco no centro da matriz
     {
-        mtx[0][0].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
-        mtx[0][0].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
+        mtx[9][30].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
+        mtx[9][30].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
+    }
+    if (mtx[30][17].indice != iBoneco)  //coloca o boneco no centro da matriz
+    {
+        mtx[30][17].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
+        mtx[30][17].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
     }
     bandeira(mtx,tm3);
+
+
+    mtx[5][2].caractere = '-1';
+    mtx[13][9].caractere = '-0';
+    mtx[23][8].caractere = '+1';
+    mtx[18][26].caractere = '+0';
+
+
+
+    if(pI=='-1' && pJ == '-1')
+    {
+        mtx[5][2].caractere = ' ';
+        flag1=1;
+    }
+    if(pI == '+1' && pJ =='+1')
+    {
+        mtx[23][8].caractere = ' ';
+        flag1=1;
+    }
+    if(pI=='-0'&&pJ == '-0')
+    {
+        mtx[13][9].caractere = ' ';
+        flag0=2;
+    }
+    if(pI=='+0'&&pJ=='+0')
+    {
+        mtx[18][26].caractere = ' ';
+        flag0=2;
+    }
+    if((flag1==2)||(flag0==4))
+    {
+        flagp1=1;
+    }
+    else if((flag1==1 && flag0==2))
+    {
+        flagp2=1;
+
+    }
+
+    if((flagp2==1)||(flagp1==1))
+    {
+        mtx[5][2].caractere = ' ';
+        mtx[23][8].caractere = ' ';
+        mtx[13][9].caractere = ' ';
+        mtx[18][26].caractere = ' ';
+
+    }
+    if(flagp1==1){
+        mtx[9][30].caractere=' ';
+    }
+    if(flagp2==1){
+        mtx[30][17].caractere=' ';
+    }
+
 }
 
 void tela2(matrizGame mtx[][tmax], int pI, int pJ)
 {
+    cout << "\n\t\t\t\tCHAVES:"<<contLibera<<"\n";
+    cout << "\n\t\t\t\tPECAS:"<<contLocal2<<"\n";
+    cout << "\n\n\t\t\t\tConceito da tabela verdade: NEGACAO";
+    cout << "\n\t\t\t\tA negação da proposição 'A' e a proposição ~A,";
+    cout << "\n\t\t\t\tde maneira que se 'A' e verdade entao '~A' e falsa, e vice-versa.";
+    cout << "\n\n\n\t\t\t\t ----------------------";
+    cout << "\n\t\t\t\t|nao pegue dois objetos|";
+    cout << "\n\t\t\t\t ----------------------\n\n";
+
     for(int linha = 0; linha < tm2; linha++)
     {
         for(int coluna = 0; coluna < tm2; coluna++)
         {
-            if (1==0)
+
+
+            if ((coluna > 4 && coluna < 16 && linha == 20)||(coluna == 15 && linha > 20)||
+                    (coluna > 4 && coluna < 20  && linha == 16)||(coluna > 13  && coluna < 19  && linha == 11)||
+                    (coluna == 5 && linha < 20 && linha > 16)||(coluna == 19 && linha < 16  && linha > 10)||
+                    (coluna > 11 && coluna < 14  && linha == 14)||(coluna == 13 && linha < 14  && linha > 10)||
+                    (coluna < 14 && coluna > 1  && linha == 14)||(coluna < 5 && coluna > 1  && linha == 4)||
+                    (coluna < 20 && coluna > 9  && linha == 6)||(coluna == 4 && linha < 10 && linha > 3 )||
+                    (coluna < 20 && coluna > 9  && linha == 2)||(coluna == 2 && linha < 14 && linha > 4)||
+                    (coluna == 2 && linha > 3 && linha < 10)||(coluna == 10 && linha > 10 && linha < 6)||
+                    (coluna > 3 && coluna < 20 && linha == 9)||(coluna == 19 && linha < 10 && linha > 5)||
+                    (coluna == 10 && linha < 6 && linha > 2)||(coluna == 19 && linha < 2)||
+                    (coluna > 19 && coluna < 23 && linha == 14)||(coluna == 23 && linha > 13 && linha < 23)||
+                    (coluna < 24 && coluna > 19 && linha == 22)||(coluna == 20 && linha > 17 && linha < 23)||
+                    (coluna < 21 && coluna > 6 && linha == 18)||(coluna > 0 && coluna < 15 && linha == 23)||
+                    (coluna == 1 && linha > 16 && linha < 24)||(coluna > 2 && coluna < 12 && linha == 14)||
+                    (coluna < 7 && coluna > 1 && linha == 2)||(coluna == 7 && linha > 1 && linha < 9)||
+                    (coluna > 2 && coluna < 12 && linha == 12)||(coluna == 23 && linha < 14 && linha >3)||
+                    (coluna > 12 && coluna < 23 && linha == 4))
             {
+
                 mtx[linha][coluna].caractere = cEspaco;
                 mtx[linha][coluna].indice = iEspaco;
             }
-            else if (1==0)
-            {
-                mtx[linha][coluna].caractere = cEspaco;
-                mtx[linha][coluna].indice = iEspaco;
-            }
+
             else
             {
-                mtx[linha][coluna].caractere = cXis;
+                mtx[linha][coluna].caractere = cParede;
                 mtx[linha][coluna].indice = iXis;
+            }
+
+            if ((linha == 2 && coluna == 2)||(linha == 18 && coluna == 20)||
+                (linha == 4 && coluna == 13)||(linha == 17 && coluna == 1))
+            {
+                mtx[linha][coluna].caractere = cPeca;
+                mtx[linha][coluna].indice = iPeca;
             }
         }
     }
     mtx[pI][pJ].caractere = cBoneco;
     mtx[pI][pJ].indice = iBoneco;
-    if (mtx[0][0].indice != iBoneco)  //coloca o boneco no centro da matriz
+    if (mtx[0][19].indice != iBoneco)  //coloca o boneco no centro da matriz
     {
-        mtx[0][0].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
-        mtx[0][0].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
+        mtx[0][19].caractere = cSaida; //caracter recebe o numero relacionado ao saido do labirinto declarado
+        mtx[0][19].indice = iSaida;  //indice recebe o iSaida declarados no cabecalho para testes internos
     }
     bandeira(mtx,tm2);
 }
 
 void tela1(matrizGame mtx[][tmax], int pI, int pJ)
 {
+    cout << "\n\t\tCHAVES:"<<contLibera<<"\n";
+    cout << "\n\t\tPECAS:"<<contLocal1<<"\n";
+    cout << "\n\n\t\tConceito da tabela verdade: DISJUNCAO";
+    cout << "\n\t\tA disjunção e falsa se, e somente se ambos os operandos forem falsos.";
+    cout << "\n\n\n\t\t ---------------------------------------------------";
+    cout << "\n\t\t |Pegue ou a peca1 ou a peca2 ou a peca3 ou a peca4|";
+    cout << "\n\t\t ---------------------------------------------------\n\n";
     for(int linha = 0; linha < tm1; linha++)
     {
         for(int coluna = 0; coluna < tm1; coluna++)
@@ -345,8 +496,14 @@ void tela1(matrizGame mtx[][tmax], int pI, int pJ)
             }
             else
             {
-                mtx[linha][coluna].caractere = cXis;
+                mtx[linha][coluna].caractere = cParede;
                 mtx[linha][coluna].indice = iXis;
+            }
+            if ((linha == 5 && coluna == 2)||(linha == 18 && coluna == 14)||
+                (linha == 13 && coluna == 12)||(linha == 1 && coluna == 3))
+            {
+                mtx[linha][coluna].caractere = cPeca;
+                mtx[linha][coluna].indice = iPeca;
             }
         }
     }
@@ -377,7 +534,7 @@ void tuto1(matrizGame mtx[][tmax], int pI, int pJ)
             }
             else
             {
-                mtx[linha][coluna].caractere = cXis; //caracter recebe o numero relacionado ao 'X' declarado
+                mtx[linha][coluna].caractere = cParede; //caracter recebe o numero relacionado ao 'X' declarado
                 mtx[linha][coluna].indice = iXis; //indice recebe o iXis  declarados no cabecalho para testes internos
             }
         }
@@ -418,12 +575,12 @@ void selectMatriz(matrizGame mtx[][tmax], int matriz, int pI, int pJ)
         printMatriz(mtx,tm5);
         break;
     case 6:
+        ajudafixa();
         tuto1(mtx, pI, pJ);
         printMatriz(mtx,tm1);
 
     }
     //Sleep(500);
-
     nextMatriz = testeSaida(mtx,matriz);
 }
 
@@ -436,35 +593,47 @@ bool testeSaida(matrizGame mtx [][tmax], int matriz)
     case 1:
         if (mtx[0][16].indice == iBoneco)
         {
+            if (contLocal1 >= 1 && contLocal1 <= 4)
+            {
+                contLibera ++;
+            }
             return true;
         }
         break;
     case 2:
-        if (mtx[0][0].indice == iBoneco)// POSIÇAO DE SAIDA
+        if (mtx[0][19].indice == iBoneco) // POSIÇAO DE SAIDA
         {
+            if (contLocal2 == 2)
+            {
+                contLibera ++;
+            }
             return true;
         }
         break;
     case 3:
-        if (mtx[0][0].indice == iBoneco)// POSIÇAO DE SAIDA
+        if (mtx[9][30].indice == iBoneco || mtx[30][17].indice == iBoneco) // POSIÇAO DE SAIDA
         {
             return true;
         }
         break;
     case 4:
-        if (mtx[0][0].indice == iBoneco) // POSIÇAO DE SAIDA
+        if (mtx[9][35].indice == iBoneco) // POSIÇAO DE SAIDA
         {
+            if (contLocal4 == 4)
+            {
+                contLibera ++;
+            }
             return true;
         }
         break;
     case 5:
-        if (mtx[0][21].indice == iBoneco)
+        if (mtx[0][21].indice == iBoneco) // POSIÇAO DE SAIDA
         {
             return true;
         }
         break;
     case 6:
-        if (mtx[10][10].indice == iBoneco)
+        if (mtx[10][10].indice == iBoneco) // POSIÇAO DE SAIDA
         {
             return true;
         }
@@ -475,6 +644,7 @@ bool testeSaida(matrizGame mtx [][tmax], int matriz)
 
 void selectMovimento(matrizGame mtx[][tmax], int matriz)
 {
+
     do
     {
         switch(matriz)
@@ -512,7 +682,7 @@ void movimento(matrizGame mtx[][tmax], int nMatriz)
 
     char direcao[40];
 
-    cout << "\n\nPara qual direcao deseja ir? ";
+    cout << "\n\n\t\t  Para qual direcao deseja ir? ";
     fflush(stdin);
     gets(direcao);
 
@@ -543,75 +713,267 @@ void movimento(matrizGame mtx[][tmax], int nMatriz)
             selectMatriz(mtx, nMatriz,pI, pJ);
         }
     }
+    reiniciaMatriz(mtx, matriz, pI, pJ);
+}
+
+void reiniciaMatriz(matrizGame mtx[][tmax], int nMatriz, int pI, int pJ)
+{
+    if (!nextMatriz && matriz == 6 )
+    {
+            ajuda(mtx, pI, pJ);
+            system("CLS");
+            roteiroTuto(mtx);
+    }
+
+    else if (!nextMatriz && matriz == 1)
+    {
+        if (mtx[5][2].indice == iBoneco || mtx[18][14].indice == iBoneco||
+            mtx[13][12].indice == iBoneco || mtx[1][3].indice == iBoneco)
+        {
+
+            contLocal1 ++;
+        }
+        else
+        {
+            //se o boneco parar fora de uma peça o lab e reiniciado
+            contLocal1 = 0;
+            system("pause");
+            system("CLS");
+            roteiro(mtx);
+        }
+    }
+    else if (!nextMatriz && matriz == 2)
+    {
+        //teste peca para negaçao
+        if (mtx[2][2].indice == iBoneco || mtx[18][20].indice == iBoneco||
+            mtx[4][13].indice == iBoneco || mtx[17][1].indice == iBoneco)
+        {
+            contLocal2 ++;
+        }
+        else
+        {
+            //se o boneco parar fora de uma peça o lab e reiniciado
+            contLocal2 = 0;
+            system("pause");
+            system("CLS");
+            roteiro(mtx);
+        }
+    }
+    else if (!nextMatriz && matriz == 4)
+    {
+        if (mtx[2][9].indice == iBoneco || mtx[31][5].indice == iBoneco||
+        mtx[24][17].indice == iBoneco || mtx[7][20].indice == iBoneco)
+        {
+
+            contLocal4 ++;
+        }
+        else
+        {
+            //se o boneco parar fora de uma peça o lab e reiniciado
+            contLocal4 = 0;
+            system("pause");
+            system("CLS");
+            roteiro(mtx);
+        }
+    }
+}
+
+
+void roteiro(matrizGame mtx[][tmax])
+{
+    //trata-se de uma matriz
+    //inicio
+    if (matriz == 0){
+     matriz = 1;
+     pI = 20;
+     pJ = 10;
+     selectMatriz(mtx, matriz, pI, pJ);
+     selectMovimento(mtx, matriz);
+     cout << "\n\n";
+     system("pause");
+     system("CLS");
+     //fim
+     matriz = 2;
+     pI = 25;
+     pJ = 15;
+     selectMatriz(mtx, matriz, pI, pJ);
+     selectMovimento(mtx, matriz);
+     cout << "\n\n";
+     system("pause");
+     system("CLS");
+     matriz = 4;
+     pI = 9;
+     pJ = 0;
+     selectMatriz(mtx, matriz, pI, pJ);
+     selectMovimento(mtx, matriz);
+     cout << "\n\n";
+     system("pause");
+     system("CLS");
+     matriz = 3;
+     pI = 3;
+     pJ = 0;
+     selectMatriz(mtx, matriz, pI, pJ);
+     selectMovimento(mtx, matriz);
+     cout << "\n\n";
+     system("pause");
+     system("CLS");
+     matriz = 5;
+     pI = 40;
+     pJ = 21;
+     selectMatriz(mtx, matriz, pI, pJ);
+     selectMovimento(mtx, matriz);
+     cout << "\n\n";
+     system("pause");
+     system("CLS");
+    }
+    else if(matriz == 1){
+        matriz = 0;
+        roteiro(mtx);
+    }
+    else if(matriz == 2){
+        pI = 25;
+        pJ = 15;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+        matriz = 4;
+        pI = 9;
+        pJ = 0;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+        matriz = 3;
+        pI = 3;
+        pJ = 0;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+        matriz = 5;
+        pI = 40;
+        pJ = 21;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+    }
+    else if (matriz == 4){
+        pI = 9;
+        pJ = 0;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+        matriz = 3;
+        pI = 3;
+        pJ = 0;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+        matriz = 5;
+        pI = 40;
+        pJ = 21;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+    }
+    else if(matriz == 3){
+        pI = 3;
+        pJ = 0;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+        matriz = 5;
+        pI = 40;
+        pJ = 21;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+    }
+    else {
+        pI = 40;
+        pJ = 21;
+        selectMatriz(mtx, matriz, pI, pJ);
+        selectMovimento(mtx, matriz);
+        cout << "\n\n";
+        system("pause");
+        system("CLS");
+    }
+
+
+}
+
+
+void ajudafixa()
+{
+    cout << "\n\n\t\tVoce ira aprender como caminhar pelo nosso labirinto.\n";
+    cout << "\n\tVoce deve usar as teclas W;A;S e D para se locomover respectivamente para cima,\n\tesquerda, baixo e direita.";
+    cout << "\n\tSeu objetivo sera digitar uma sequencia de teclas que ajude o boneco a chegar ao centro do Labirinto.";
+    cout << "\n\tVoce deve lembrar o boneco se locomove de ponto a ponto, so basta 1 comando \n\tpara que ele chegue ate o proximo ponto.\n\tApos terminar de digitar a sequencia\n\tde movimentos desejada aperte enter para prosseguir.\n";
+
 }
 
 void roteiroTuto(matrizGame mtx[][tmax])
 {
-    int matriz = 6;
+    matriz = 6;
     pI = 20;
     pJ = 10;
     selectMatriz(mtx, matriz, pI, pJ);
     selectMovimento(mtx, matriz);
     cout << "\n\n";
+    nextMatriz = testeSaida(mtx,matriz);
     system("pause");
 }
 
-void roteiro(matrizGame mtx[][tmax])
+
+void ajuda(matrizGame mtx[][tmax], int pI, int pJ)
 {
-    int matriz;
-    //trata-se de uma matriz
-    //inicio
-    matriz = 1;
-    pI = 20;
-    pJ = 10;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    cout << "\n\n";
-    system("pause");
-    //fim
-    matriz = 2;
-    pI = 25;
-    pJ = 15;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    cout << "\n\n";
-    system("pause");
-    matriz = 3;
-    pI = 30;
-    pJ = 20;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    cout << "\n\n";
-    system("pause");
-    matriz = 4;
-    pI = 35;
-    pJ = 25;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    cout << "\n\n";
-    system("pause");
-    matriz = 5;
-    pI = 40;
-    pJ = 21;
-    selectMatriz(mtx, matriz, pI, pJ);
-    selectMovimento(mtx, matriz);
-    cout << "\n\n";
-    system("pause");
+    while (1)
+    {
+        if(mtx[10][15].indice == iBoneco)
+        {
+            cout << "\n\n\n\t\t --------------------------------";
+            cout << "\n\t\t |  voce chegou muito perto!!!  |";
+            cout << "\n\t\t | Digite a sequencia completa: |";
+            cout << "\n\t\t -------------------------------- \n\n";
+            system("pause");
+            break;
+        }
+        else if(mtx[14][19].indice == iBoneco)
+        {
+            cout << "\n\n\n\t\t --------------------------------";
+            cout << "\n\t\t |     voce esta na metade!!!   |";
+            cout << "\n\t\t | Digite a sequencia completa: |";
+            cout << "\n\t\t --------------------------------\n\n";
+            system("pause");
+            break;
+        }
+        else
+        {
+            cout << "\n\n\n\t\t ------------------------------------------";
+            cout << "\n\t\t |O boneco nao conceguiu chegar ao centro:|";
+            cout << "\n\t\t |      Digite a sequencia completa:      |";
+            cout << "\n\t\t ------------------------------------------\n\n";
+            system("pause");
+            break;
+        }
+    }
 }
-
-void ajuda()
-{
-    cout << "\n\n\n\t\tBem vindo ao Game do Labirinto.\n\n";
-    system("pause");
-    system("cls");
-    cout << "\n\n\t\tVoce ira aprender como caminhar pelo nosso labirinto.\n\n";
-    cout << "Voce deve usar as teclas W;A;S e D \npara se locomover respectivamente para cima,\nesquerda, baixo e direita.\n\n";
-    cout << "Seu objetivo sera digitar uma sequencia de \nteclas que ajude o boneco a chegar ao centro do Labirinto.\n\n";
-    cout << "Voce deve lembrar o boneco se locomove \nde ponto a ponto, so basta 1 comando \npara que ele chegue ate o proximo ponto.\nApos terminar de digitar a sequencia\nde movimentos desejada aperte enter para prosseguir.\n\n";
-    system("pause");
-    system("cls");
-}
-
 bool iniciarJogo()
 {
     int op;
@@ -619,10 +981,9 @@ bool iniciarJogo()
 
     while (1)
     {
-        cout << " 1-Iniciar jogo\n";
-        cout << " 2-Tutorial\n";
-        cout << " 3-Ajuda\n";
-        cout << " 4-Sair\n";
+        cout << "\n\n\t 1-Iniciar jogo\n";
+        cout << "\t 2-Tutorial\n";
+        cout << "\t 3-Sair\n\t ";
         cin >> op;
 
 
@@ -630,24 +991,19 @@ bool iniciarJogo()
         {
             if (op == 1)
             {
+                system("CLS");
                 roteiro(mtx);
                 break;
             }
             if (op == 2)
             {
+                system("CLS");
                 roteiroTuto(mtx);
                 system("CLS");
                 iniciarJogo();
                 break;
             }
             if (op == 3)
-            {
-                ajuda();
-                system("CLS");
-                iniciarJogo();
-                break;
-            }
-            if (op == 4)
             {
                 return 0;
             }
@@ -660,5 +1016,6 @@ bool iniciarJogo()
             iniciarJogo();
         }
     }
+    return 0;
 }
 
